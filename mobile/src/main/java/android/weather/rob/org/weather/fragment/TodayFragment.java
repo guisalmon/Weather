@@ -13,12 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.weather.rob.org.weather.R;
+import android.weather.rob.org.weather.client.parser.WeatherJSONParser;
 import android.weather.rob.org.weather.geolocation.Geolocation;
 import android.weather.rob.org.weather.geolocation.GeolocationListener;
-import android.widget.Toast;
+import android.weather.rob.org.weather.listener.OnWeatherDownloadComplete;
+import android.weather.rob.org.weather.utility.Weather;
 
-import java.util.Date;
-import java.lang.Runnable;
+//import android.util.Log;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +29,13 @@ import java.lang.Runnable;
  * Use the {@link TodayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TodayFragment extends Fragment implements GeolocationListener {
+public class TodayFragment extends Fragment implements GeolocationListener, OnWeatherDownloadComplete {
+
+    @Override
+    public void onTaskCompleted(Weather weather) {
+        Log.d(getClass().getName(), weather.toString());
+    }
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,6 +46,8 @@ public class TodayFragment extends Fragment implements GeolocationListener {
     private String mParam2;
     private Location mCurrentLocation = null;
     private Geolocation mGeolocation = null;
+    private WeatherJSONParser mWeatherUpdater = null;
+    private Weather mWeather = null;
     private View mRootView;
 
     private OnFragmentInteractionListener mListener;
@@ -79,16 +88,12 @@ public class TodayFragment extends Fragment implements GeolocationListener {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.i(getClass().getName(), "Fragment created");
         // start geolocation
 
         if(mCurrentLocation==null)
         {
-            Log.i("toto", "mCurrentLocation null");
-            mGeolocation = null;
+            mWeatherUpdater = new WeatherJSONParser();
             mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
-        }else{
-            Log.i("toto", mCurrentLocation.toString());
         }
         super.onActivityCreated(savedInstanceState);
 
@@ -136,16 +141,14 @@ public class TodayFragment extends Fragment implements GeolocationListener {
 
     @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
-        if(mRootView==null) return; // view was destroyed
-        Log.v(getClass().getName(), "Current location : "+location.getProvider() + " / " + location.getLatitude() + " / " + location.getLongitude() + " / " + new Date(location.getTime()).toString());
-        mCurrentLocation = new Location(location);
+        if(mRootView==null) return;
+        mWeather = mWeatherUpdater.UpdateData(location, this);
     }
 
     @Override
     public void onGeolocationFail(Geolocation geolocation) {
-        if(mRootView==null) return; // view was destroyed
-
-        Log.v(getClass().getName(), "Fragment.onGeolocationFail()");
+        if(mRootView==null) return;
+        Log.d(getClass().getName(), "Fragment.onGeolocationFail()");
     }
 
     /**
