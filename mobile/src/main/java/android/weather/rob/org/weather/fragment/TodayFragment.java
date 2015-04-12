@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.weather.rob.org.weather.R;
-import android.weather.rob.org.weather.client.parser.WeatherJSONParser;
+import android.weather.rob.org.weather.client.WeatherJSONParser;
 import android.weather.rob.org.weather.geolocation.Geolocation;
 import android.weather.rob.org.weather.geolocation.GeolocationListener;
 import android.weather.rob.org.weather.listener.OnWeatherDownloadComplete;
@@ -32,7 +32,7 @@ import android.weather.rob.org.weather.utility.Weather;
 public class TodayFragment extends Fragment implements GeolocationListener, OnWeatherDownloadComplete {
 
     @Override
-    public void onTaskCompleted(Weather weather) {
+    public void onCurrentWeatherTaskCompleted(Weather weather) {
         Log.d(getClass().getName(), weather.toString());
     }
 
@@ -142,7 +142,7 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
         if(mRootView==null) return;
-        mWeather = mWeatherUpdater.UpdateData(location, this);
+        mWeather = mWeatherUpdater.UpdateCurrentDataByLocation(location, this, Weather.format.METRIC);
     }
 
     @Override

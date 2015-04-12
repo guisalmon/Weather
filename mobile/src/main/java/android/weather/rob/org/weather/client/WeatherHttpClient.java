@@ -16,14 +16,23 @@ public class WeatherHttpClient {
 
     private static String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?";
     private static String IMG_URL = "http://openweathermap.org/img/w/";
+    private static String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?";
 
+    protected enum WeatherRequest {
+        CURRENT,
+        FORECAST
+    }
 
-    public String getWeatherData(String location) {
+    protected String getWeatherData(String location, WeatherRequest requestType) {
         HttpURLConnection con = null ;
         InputStream is = null;
 
         try {
-            con = (HttpURLConnection) ( new URL(BASE_URL + location)).openConnection();
+            if (requestType == WeatherRequest.CURRENT) {
+                con = (HttpURLConnection) (new URL(BASE_URL + location)).openConnection();
+            } else {
+                con = (HttpURLConnection) (new URL(FORECAST_URL + location)).openConnection();
+            }
             con.setRequestMethod("GET");
             con.setDoInput(true);
             con.setDoOutput(true);

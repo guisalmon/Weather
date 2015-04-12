@@ -25,6 +25,11 @@ public class Weather {
     private float mWindDeg;
     private int mCloud;
 
+    public enum format {
+        METRIC,
+        IMPERIAL
+    }
+
     public Weather() {
     }
 

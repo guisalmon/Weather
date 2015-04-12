@@ -1,15 +1,17 @@
-package android.weather.rob.org.weather.client.parser;
+package android.weather.rob.org.weather.client;
 
 import android.location.Location;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.weather.rob.org.weather.client.WeatherHttpClient;
+import android.weather.rob.org.weather.listener.OnForecastDownloadComplete;
 import android.weather.rob.org.weather.listener.OnWeatherDownloadComplete;
 import android.weather.rob.org.weather.utility.Weather;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by guillaume on 11-04-15.
@@ -18,16 +20,46 @@ public class WeatherJSONParser{
 
     private static String mLoc;
 
+    /**
+     * Returns a weather forecast for a given location fir the next 5 days through the listener given in parameter
+     * @param location containing coordinates
+     * @param listener to call when the data retrieval is done
+     * @param format can be Weather.format.METRIC or Weather.format.IMPERIAL
+     */
+    public static void UpdateForecastDataByLocation(Location location, OnForecastDownloadComplete listener, Weather.format format){
+    }
+
+    /**
+     * Returns the current weather for a given location through the listener given in parameter
+     * @param location containing coordinates
+     * @param listener to call when the data retrieval is done
+     * @param format can be Weather.format.METRIC or Weather.format.IMPERIAL
+     */
+    public static void UpdateCurrentDataByLocation(Location location, OnWeatherDownloadComplete listener, Weather.format format){
+
+        //Formatting the request suffix
+        if (format == Weather.format.IMPERIAL) {
+            mLoc = "lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&units=imperial";
+        } else {
+            mLoc = "lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&units=metric";
+        }
+
+        //Launching the download task
+        new DownloadWeatherTask().execute(listener);
+    }
+
+
+
     private static class DownloadWeatherTask extends AsyncTask<OnWeatherDownloadComplete, Void, Weather> {
         private OnWeatherDownloadComplete listener;
         @Override
         protected Weather doInBackground(OnWeatherDownloadComplete... params) {
             Weather weather = new Weather();
             listener = params[0];
-            String data = ( (new WeatherHttpClient()).getWeatherData(mLoc));
+            String data = ( (new WeatherHttpClient()).getWeatherData(mLoc, WeatherHttpClient.WeatherRequest.CURRENT));
 
             if (data != null) {
-                weather = getWeather(data);
+                weather = getCurrentWeather(data);
             }
 
             // Let's retrieve the icon
@@ -38,19 +70,11 @@ public class WeatherJSONParser{
 
         @Override
         protected void onPostExecute(Weather weather) {
-            listener.onTaskCompleted(weather);
+            listener.onCurrentWeatherTaskCompleted(weather);
         }
     }
 
-    public static Weather UpdateData(Location location, OnWeatherDownloadComplete listener){
-        mLoc = "lat=" + location.getLatitude() + "&lon=" + location.getLongitude();
-        if ((mLoc != null)&&(mLoc != "")) {
-            new DownloadWeatherTask().execute(listener);
-        }
-        return null;
-    }
-
-    private static Weather getWeather(String data){
+    private static Weather getCurrentWeather(String data){
         Weather weather = new Weather();
         JSONObject jObj = null;
         try {
@@ -86,6 +110,7 @@ public class WeatherJSONParser{
             return weather;
         } catch (JSONException e) {
             Log.e("JSONParser", "Weather data unavailable");
+            e.printStackTrace();
             return null;
         }
 
