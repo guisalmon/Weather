@@ -1,13 +1,10 @@
 package android.weather.rob.org.weather.utility;
 
-import android.location.Location;
-
 /**
  * Created by guillaume on 11-04-15.
  */
 public class Weather {
     private byte[] mIcon;
-    //private Location mLocation;
     private String mCity;
     private String mCountry;
     private int mSunrise;
@@ -25,16 +22,15 @@ public class Weather {
     private float mWindDeg;
     private int mCloud;
 
-    public enum format {
-        METRIC,
-        IMPERIAL
-    }
-
     public Weather() {
     }
 
     public String getmIconPath() {
         return mIconPath;
+    }
+
+    public void setmIconPath(String mIconPath) {
+        this.mIconPath = mIconPath;
     }
 
     public void setmId(int mId) {
@@ -47,10 +43,6 @@ public class Weather {
 
     public void setmCondition(String mCondition) {
         this.mCondition = mCondition;
-    }
-
-    public void setmIconPath(String mIconPath) {
-        this.mIconPath = mIconPath;
     }
 
     public void setmHumidity(int mHumidity) {
@@ -85,11 +77,9 @@ public class Weather {
         this.mCloud = mCloud;
     }
 
-    public void iconData(byte[] icon){
+    public void iconData(byte[] icon) {
         mIcon = icon;
     }
-
-    //public void setmLocation (Location location) { mLocation = location }
 
     public void setmCity(String mCity) {
         this.mCity = mCity;
@@ -127,5 +117,10 @@ public class Weather {
                 ", mWindDeg=" + mWindDeg +
                 ", mCloud=" + mCloud +
                 '}';
+    }
+
+    public enum format {
+        METRIC,
+        IMPERIAL
     }
 }

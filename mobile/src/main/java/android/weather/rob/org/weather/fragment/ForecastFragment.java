@@ -37,62 +37,21 @@ import java.util.ArrayList;
  */
 public class ForecastFragment extends Fragment implements AbsListView.OnItemClickListener, OnForecastDownloadComplete, GeolocationListener {
 
-    @Override
-    public void onGeolocationRespond(Geolocation geolocation, Location location) {
-        if(mRootView==null) return;
-        mForecast = mWeatherUpdater.UpdateForecastDataByLocation(location, this, Weather.format.METRIC);
-    }
-
-    @Override
-    public void onGeolocationFail(Geolocation geolocation) {
-        if(mRootView==null) return;
-        Log.d(getClass().getName(), "Fragment.onGeolocationFail()");
-    }
-
     private Location mCurrentLocation = null;
     private Geolocation mGeolocation = null;
     private WeatherJSONParser mWeatherUpdater = null;
     private ArrayList<Weather> mForecast;
     private View mRootView;
-
-    @Override
-    public void onForecastTaskCompleted(ArrayList<Weather> forecast) {
-        for (Weather weather : forecast){
-            Log.d(getClass().getName(), weather.toString());
-        }
-    }
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private OnFragmentInteractionListener mListener;
-
     /**
      * The fragment's ListView/GridView.
      */
     private AbsListView mListView;
-
     /**
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
     private ListAdapter mAdapter;
-
-    // TODO: Rename and change types of parameters
-    public static ForecastFragment newInstance(String param1, String param2) {
-        ForecastFragment fragment = new ForecastFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -101,14 +60,35 @@ public class ForecastFragment extends Fragment implements AbsListView.OnItemClic
     public ForecastFragment() {
     }
 
+    public static ForecastFragment newInstance(String param1, String param2) {
+        ForecastFragment fragment = new ForecastFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onGeolocationRespond(Geolocation geolocation, Location location) {
+        if (mRootView == null) return;
+        mWeatherUpdater.UpdateForecastDataByLocation(location, this, Weather.format.METRIC);
+    }
+
+    @Override
+    public void onGeolocationFail(Geolocation geolocation) {
+        if (mRootView == null) return;
+        Log.d(getClass().getName(), "Fragment.onGeolocationFail()");
+    }
+
+    @Override
+    public void onForecastTaskCompleted(ArrayList<Weather> forecast) {
+        for (Weather weather : forecast) {
+            Log.d(getClass().getName(), weather.toString());
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         // TODO: Change Adapter to display your content
         mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
@@ -117,8 +97,7 @@ public class ForecastFragment extends Fragment implements AbsListView.OnItemClic
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        if(mCurrentLocation==null)
-        {
+        if (mCurrentLocation == null) {
             mWeatherUpdater = new WeatherJSONParser();
             mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
         }
@@ -129,7 +108,7 @@ public class ForecastFragment extends Fragment implements AbsListView.OnItemClic
     public void onPause() {
         super.onPause();
         // stop geolocation
-        if(mGeolocation!=null) mGeolocation.stop();
+        if (mGeolocation != null) mGeolocation.stop();
     }
 
     @Override

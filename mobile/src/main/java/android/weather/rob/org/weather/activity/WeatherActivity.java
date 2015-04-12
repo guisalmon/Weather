@@ -9,14 +9,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.weather.rob.org.weather.R;
 import android.weather.rob.org.weather.fragment.ForecastFragment;
 import android.weather.rob.org.weather.fragment.NavigationDrawerFragment;
 import android.weather.rob.org.weather.fragment.TodayFragment;
-import android.weather.rob.org.weather.R;
 
 
 public class WeatherActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, ForecastFragment.OnFragmentInteractionListener, TodayFragment.OnFragmentInteractionListener{
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, ForecastFragment.OnFragmentInteractionListener, TodayFragment.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.

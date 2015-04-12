@@ -8,5 +8,5 @@ import java.util.ArrayList;
  * Created by guillaume on 12-04-15.
  */
 public interface OnForecastDownloadComplete {
-    void onForecastTaskCompleted (ArrayList<Weather> forecast);
+    void onForecastTaskCompleted(ArrayList<Weather> forecast);
 }

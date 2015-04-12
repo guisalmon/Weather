@@ -90,8 +90,7 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         // start geolocation
 
-        if(mCurrentLocation==null)
-        {
+        if (mCurrentLocation == null) {
             mWeatherUpdater = new WeatherJSONParser();
             mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
         }
@@ -104,7 +103,7 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
         super.onPause();
 
         // stop geolocation
-        if(mGeolocation!=null) mGeolocation.stop();
+        if (mGeolocation != null) mGeolocation.stop();
     }
 
     @Override
@@ -141,13 +140,13 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
 
     @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
-        if(mRootView==null) return;
-        mWeather = mWeatherUpdater.UpdateCurrentDataByLocation(location, this, Weather.format.METRIC);
+        if (mRootView == null) return;
+        mWeatherUpdater.UpdateCurrentDataByLocation(location, this, Weather.format.METRIC);
     }
 
     @Override
     public void onGeolocationFail(Geolocation geolocation) {
-        if(mRootView==null) return;
+        if (mRootView == null) return;
         Log.d(getClass().getName(), "Fragment.onGeolocationFail()");
     }
 
