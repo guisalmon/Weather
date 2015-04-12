@@ -1,10 +1,153 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="android.weather.rob.org.weather.fragment.TodayFragment">
+    tools:context="android.weather.rob.org.weather.fragment.TodayFragment"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/margins_fragment_today_content">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/todayWeatherIcon"
+        android:layout_gravity="center_horizontal|top"
+        android:background="@drawable/overlay_weather_status_today"
+        android:layout_margin="@dimen/margins_fragment_today_content"/>
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/todayLocation"
+        android:layout_gravity="center"
+        android:text="Location | Country"
+        android:layout_marginTop="@dimen/margins_fragment_today_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TEMP | Weather"
+        android:id="@+id/todayWeatherDescription"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/margins_fragment_today_content"/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="@dimen/margins_fragment_today_content"
+        android:layout_marginBottom="@dimen/margins_fragment_today_content"
+        android:layout_marginRight="@dimen/spacings_fragment_today_content"
+        android:layout_marginLeft="@dimen/spacings_fragment_today_content"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margins_fragment_today_content"
+        android:layout_marginBottom="@dimen/margins_fragment_today_content">
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/spacings_fragment_today_content"
+            android:layout_marginRight="@dimen/spacings_fragment_today_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_weather_humidity"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/todayWeatherHumidity"
+                android:text="57 %"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/spacings_fragment_today_content"
+            android:layout_marginRight="@dimen/spacings_fragment_today_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_weather_precipitation"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/todayWeatherPrecipitations"
+                android:text="0.0 mm"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/spacings_fragment_today_content"
+            android:layout_marginRight="@dimen/spacings_fragment_today_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_weather_pressure"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/todayWeatherPressure"
+                android:text="1016 hPa"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margins_fragment_today_content"
+        android:layout_marginBottom="@dimen/margins_fragment_today_content">
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/spacings_fragment_today_content"
+            android:layout_marginRight="@dimen/spacings_fragment_today_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_weather_wind_speed"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/todayWeatherWindSpeed"
+                android:text="20km/h"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/spacings_fragment_today_content"
+            android:layout_marginRight="@dimen/spacings_fragment_today_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_weather_direction"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/todayWeatherDirection"
+                android:text="SE"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
