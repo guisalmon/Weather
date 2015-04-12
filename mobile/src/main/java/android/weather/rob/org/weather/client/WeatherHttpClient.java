@@ -1,5 +1,7 @@
 package android.weather.rob.org.weather.client;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -14,7 +16,7 @@ public class WeatherHttpClient {
 
     private static String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?";
     private static String IMG_URL = "http://openweathermap.org/img/w/";
-    private static String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?";
+    private static String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
 
     protected String getWeatherData(String location, WeatherRequest requestType) {
         HttpURLConnection con = null;

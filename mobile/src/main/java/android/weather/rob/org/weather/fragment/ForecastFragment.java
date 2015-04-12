@@ -17,12 +17,14 @@ import android.weather.rob.org.weather.fragment.dummy.DummyContent;
 import android.weather.rob.org.weather.geolocation.Geolocation;
 import android.weather.rob.org.weather.geolocation.GeolocationListener;
 import android.weather.rob.org.weather.listener.OnForecastDownloadComplete;
+import android.weather.rob.org.weather.utility.Forecast;
 import android.weather.rob.org.weather.utility.Weather;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -68,6 +70,11 @@ public class ForecastFragment extends Fragment implements AbsListView.OnItemClic
     }
 
     @Override
+    public void onForecastTaskFailed() {
+        Toast.makeText(getActivity(), "Downloading of the forecast data failed, check your internet connection", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
         if (mRootView == null) return;
         mWeatherUpdater.UpdateForecastDataByLocation(location, this, Weather.format.METRIC);
@@ -80,9 +87,11 @@ public class ForecastFragment extends Fragment implements AbsListView.OnItemClic
     }
 
     @Override
-    public void onForecastTaskCompleted(ArrayList<Weather> forecast) {
-        for (Weather weather : forecast) {
-            Log.d(getClass().getName(), weather.toString());
+    public void onForecastTaskCompleted(ArrayList<Forecast> forecast) {
+        if (forecast != null) {
+            for (Forecast f : forecast) {
+                Log.d(getClass().getName(), f.toString());
+            }
         }
     }
 

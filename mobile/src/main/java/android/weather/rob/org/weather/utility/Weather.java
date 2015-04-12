@@ -1,5 +1,7 @@
 package android.weather.rob.org.weather.utility;
 
+import java.util.Date;
+
 /**
  * Created by guillaume on 11-04-15.
  */
@@ -21,8 +23,14 @@ public class Weather {
     private float mWindSpeed;
     private float mWindDeg;
     private int mCloud;
+    private Date mDate;
 
-    public Weather() {
+    public void setmDate(long timestamp) {
+        this.mDate = new Date(timestamp * 1000);
+    }
+
+    public void setmDateToCurrentTime () {
+        mDate = new Date();
     }
 
     public String getmIconPath() {

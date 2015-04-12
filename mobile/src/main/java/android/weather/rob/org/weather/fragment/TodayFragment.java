@@ -18,6 +18,7 @@ import android.weather.rob.org.weather.geolocation.Geolocation;
 import android.weather.rob.org.weather.geolocation.GeolocationListener;
 import android.weather.rob.org.weather.listener.OnWeatherDownloadComplete;
 import android.weather.rob.org.weather.utility.Weather;
+import android.widget.Toast;
 
 //import android.util.Log;
 
@@ -31,58 +32,46 @@ import android.weather.rob.org.weather.utility.Weather;
  */
 public class TodayFragment extends Fragment implements GeolocationListener, OnWeatherDownloadComplete {
 
-    @Override
-    public void onCurrentWeatherTaskCompleted(Weather weather) {
-        Log.d(getClass().getName(), weather.toString());
-    }
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private Location mCurrentLocation = null;
     private Geolocation mGeolocation = null;
     private WeatherJSONParser mWeatherUpdater = null;
     private Weather mWeather = null;
     private View mRootView;
-
     private OnFragmentInteractionListener mListener;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TodayFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TodayFragment newInstance(String param1, String param2) {
-        TodayFragment fragment = new TodayFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-
-        return fragment;
-    }
 
     public TodayFragment() {
 
         // Required empty public constructor
     }
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @return A new instance of fragment TodayFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static TodayFragment newInstance(String param1, String param2) {
+        TodayFragment fragment = new TodayFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    @Override
+    public void onCurrentWeatherTaskCompleted(Weather weather) {
+        Log.d(getClass().getName(), weather.toString());
+    }
+
+    @Override
+    public void onCurrentWeatherTaskFailed() {
+        Toast.makeText(getActivity(), "Downloading of the current weather data failed, check your internet connection", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
     }
 
