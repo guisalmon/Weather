@@ -6,12 +6,11 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.weather.rob.org.weather.R;
+import android.weather.rob.org.weather.adapter.ForecastListAdapter;
 import android.weather.rob.org.weather.client.WeatherJSONParser;
 import android.weather.rob.org.weather.fragment.dummy.DummyContent;
 import android.weather.rob.org.weather.geolocation.Geolocation;
@@ -23,7 +22,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -37,23 +35,18 @@ import java.util.ArrayList;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class ForecastFragment extends Fragment implements AbsListView.OnItemClickListener, OnForecastDownloadComplete, GeolocationListener {
+public class ForecastFragment extends ListFragment implements AbsListView.OnItemClickListener, OnForecastDownloadComplete, GeolocationListener {
 
     private Location mCurrentLocation = null;
     private Geolocation mGeolocation = null;
     private WeatherJSONParser mWeatherUpdater = null;
-    private ArrayList<Weather> mForecast;
-    private View mRootView;
+    private ArrayList<Forecast> mForecast;
     private OnFragmentInteractionListener mListener;
-    /**
-     * The fragment's ListView/GridView.
-     */
-    private AbsListView mListView;
     /**
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private ListAdapter mAdapter;
+    private ArrayAdapter mAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -76,13 +69,11 @@ public class ForecastFragment extends Fragment implements AbsListView.OnItemClic
 
     @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
-        if (mRootView == null) return;
         mWeatherUpdater.UpdateForecastDataByLocation(location, this, Weather.format.METRIC);
     }
 
     @Override
     public void onGeolocationFail(Geolocation geolocation) {
-        if (mRootView == null) return;
         Log.d(getClass().getName(), "Fragment.onGeolocationFail()");
     }
 
@@ -92,25 +83,31 @@ public class ForecastFragment extends Fragment implements AbsListView.OnItemClic
             for (Forecast f : forecast) {
                 Log.d(getClass().getName(), f.toString());
             }
+            mForecast = forecast;
+            if (getListView() != null) {
+                mAdapter = new ForecastListAdapter(getActivity(), R.layout.forecast_list_item, mForecast);
+                setListAdapter(mAdapter);
+            } else {
+                Log.w(getClass().getName(),"ListView is null");
+            }
         }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // TODO: Change Adapter to display your content
         mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+                R.layout.forecast_list_item, android.R.id.text1, DummyContent.ITEMS);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         if (mCurrentLocation == null) {
             mWeatherUpdater = new WeatherJSONParser();
             mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
         }
-        super.onActivityCreated(savedInstanceState);
+        mAdapter = new ForecastListAdapter(getActivity(), R.layout.forecast_list_item, mForecast);
     }
 
     @Override
@@ -118,21 +115,6 @@ public class ForecastFragment extends Fragment implements AbsListView.OnItemClic
         super.onPause();
         // stop geolocation
         if (mGeolocation != null) mGeolocation.stop();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_forecast, container, false);
-
-        // Set the adapter
-        mListView = (AbsListView) mRootView.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
-
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
-
-        return mRootView;
     }
 
     @Override
@@ -159,19 +141,6 @@ public class ForecastFragment extends Fragment implements AbsListView.OnItemClic
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
             mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }
-    }
-
-    /**
-     * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
-     * to supply the text it should use.
-     */
-    public void setEmptyText(CharSequence emptyText) {
-        View emptyView = mListView.getEmptyView();
-
-        if (emptyView instanceof TextView) {
-            ((TextView) emptyView).setText(emptyText);
         }
     }
 

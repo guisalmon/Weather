@@ -5,14 +5,14 @@ package android.weather.rob.org.weather.utility;
  */
 public class Forecast {
     private Weather weather;
-    private float mDayTemp;
+    private int mDayTemp;
     private float mMinTemp;
     private float mMaxTemp;
     private float mNightTemp;
     private float mEveTemp;
     private float mMorningTemp;
 
-    public void setmDayTemp(float mDayTemp) {
+    public void setmDayTemp(int mDayTemp) {
         this.mDayTemp = mDayTemp;
     }
 
@@ -42,6 +42,10 @@ public class Forecast {
 
     public Weather getWeather() {
         return weather;
+    }
+
+    public int getmDayTemp() {
+        return mDayTemp;
     }
 
     @Override

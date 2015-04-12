@@ -85,7 +85,7 @@ public class WeatherJSONParser {
 
             JSONObject jTempObj = jDayForecast.getJSONObject("temp");
 
-            f.setmDayTemp((float) jTempObj.getDouble("day"));
+            f.setmDayTemp((int) jTempObj.getDouble("day"));
             f.setmMinTemp((float) jTempObj.getDouble("min"));
             f.setmMaxTemp((float) jTempObj.getDouble("max"));
             f.setmNightTemp((float) jTempObj.getDouble("night"));
@@ -134,7 +134,7 @@ public class WeatherJSONParser {
         weather.setmPressure(getInt("pressure", mainObj));
         weather.setmTempMax(getFloat("temp_max", mainObj));
         weather.setmTempMin(getFloat("temp_min", mainObj));
-        weather.setmTemp(getFloat("temp", mainObj));
+        weather.setmTemp(getInt("temp", mainObj));
 
         JSONObject wObj = getObject("wind", jObj);
         weather.setmWindSpeed(getFloat("speed", wObj));

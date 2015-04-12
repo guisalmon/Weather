@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by guillaume on 11-04-15.
@@ -24,7 +26,7 @@ public class Weather {
     private int mPressure;
     private float mTempMax;
     private float mTempMin;
-    private float mTemp;
+    private int mTemp;
     private float mWindSpeed;
     private float mWindDeg;
     private int mCloud;
@@ -67,6 +69,30 @@ public class Weather {
         return mWindSpeed;
     }
 
+    public String getmDesc() { return mDesc; }
+
+    public String getDay() {
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(mDate);
+        switch (cal.get(Calendar.DAY_OF_WEEK)){
+            case Calendar.MONDAY:
+                return "Monday";
+            case Calendar.TUESDAY:
+                return "Tuesday";
+            case Calendar.FRIDAY:
+                return "Friday";
+            case Calendar.WEDNESDAY:
+                return "Wednesday";
+            case Calendar.THURSDAY:
+                return "Thursday";
+            case Calendar.SATURDAY:
+                return "Saturday";
+            case Calendar.SUNDAY:
+                return "Sunday";
+        }
+        return "";
+    }
+
     public Bitmap getIcon() {
         //Log.d(getClass().getName(), ""+mIcon.length);
         //return BitmapFactory.decodeByteArray(mIcon, 0, mIcon.length);
@@ -88,7 +114,7 @@ public class Weather {
         else return "NW";
     }
 
-    public float getmTemp() {
+    public int getmTemp() {
         return mTemp;
     }
 
@@ -132,7 +158,7 @@ public class Weather {
         this.mTempMin = mTempMin;
     }
 
-    public void setmTemp(float mTemp) {
+    public void setmTemp(int mTemp) {
         this.mTemp = mTemp;
     }
 
