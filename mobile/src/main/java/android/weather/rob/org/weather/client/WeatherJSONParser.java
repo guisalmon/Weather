@@ -142,6 +142,9 @@ public class WeatherJSONParser {
 
         JSONObject cObj = getObject("clouds", jObj);
         weather.setmCloud(getInt("all", cObj));
+
+        JSONObject rObj = getObject("rain", jObj);
+        weather.setmPrecipitations(getFloat("3h", rObj));
         return weather;
     }
 
@@ -184,7 +187,7 @@ public class WeatherJSONParser {
             // Let's retrieve the icon
             if (forecast != null) {
                 for (Forecast f : forecast) {
-                    f.getWeather().iconData((new WeatherHttpClient()).getImage(f.getWeather().getmIconPath()));
+                    f.getWeather().setmImage((new WeatherHttpClient()).getImage(f.getWeather().getmIconPath()));
                 }
             }
 
@@ -215,7 +218,7 @@ public class WeatherJSONParser {
                 try {
                     weather = getCurrentWeather(data);
                     // Let's retrieve the icon
-                    weather.iconData((new WeatherHttpClient()).getImage(weather.getmIconPath()));
+                    weather.setmImage((new WeatherHttpClient()).getImage(weather.getmIconPath()));
                 } catch (JSONException e) {
                     Log.e("JSONParser", "Weather data unavailable");
                     e.printStackTrace();

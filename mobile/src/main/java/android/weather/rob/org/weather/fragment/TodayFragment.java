@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,8 @@ import android.weather.rob.org.weather.geolocation.Geolocation;
 import android.weather.rob.org.weather.geolocation.GeolocationListener;
 import android.weather.rob.org.weather.listener.OnWeatherDownloadComplete;
 import android.weather.rob.org.weather.utility.Weather;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 //import android.util.Log;
@@ -62,6 +65,14 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     @Override
     public void onCurrentWeatherTaskCompleted(Weather weather) {
         Log.d(getClass().getName(), weather.toString());
+        ((TextView) getActivity().findViewById(R.id.todayLocation)).setText(weather.getmCity()+", "+weather.getmCountry());
+        ((TextView) getActivity().findViewById(R.id.todayWeatherDescription)).setText(weather.getmTemp()+"°C | "+weather.getmCondition());
+        ((TextView) getActivity().findViewById(R.id.todayWeatherHumidity)).setText(weather.getmHumidity()+"%");
+        ((TextView) getActivity().findViewById(R.id.todayWeatherPrecipitations)).setText(weather.getmPrecipitations()+" mm");
+        ((TextView) getActivity().findViewById(R.id.todayWeatherPressure)).setText(weather.getmPressure()+" hPa");
+        ((TextView) getActivity().findViewById(R.id.todayWeatherWindSpeed)).setText(weather.getmWindSpeed()+" km/h");
+        ((TextView) getActivity().findViewById(R.id.todayWeatherDirection)).setText(weather.getWindDirection());
+        ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageBitmap(weather.getIcon());
     }
 
     @Override

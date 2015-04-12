@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/todayLocation"
         android:layout_gravity="center"
-        android:text="Location | Country"
+        android:text="Location, Country"
         android:layout_marginTop="@dimen/margins_fragment_today_content"/>
 
     <TextView
@@ -27,6 +27,8 @@
         android:text="TEMP | Weather"
         android:id="@+id/todayWeatherDescription"
         android:layout_gravity="center"
+        android:textSize="35dp"
+        android:textStyle="bold"
         android:layout_marginBottom="@dimen/margins_fragment_today_content"/>
 
     <View
@@ -61,7 +63,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherHumidity"
                 android:text="57 %"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
@@ -80,7 +83,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherPrecipitations"
                 android:text="0.0 mm"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
@@ -99,7 +103,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherPressure"
                 android:text="1016 hPa"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -126,7 +131,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherWindSpeed"
                 android:text="20km/h"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
@@ -145,7 +151,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherDirection"
                 android:text="SE"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
         </LinearLayout>
 
     </LinearLayout>

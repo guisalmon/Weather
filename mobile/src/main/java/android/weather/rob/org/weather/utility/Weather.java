@@ -1,5 +1,9 @@
 package android.weather.rob.org.weather.utility;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
 import java.util.Date;
 
 /**
@@ -7,6 +11,7 @@ import java.util.Date;
  */
 public class Weather {
     private byte[] mIcon;
+    private Bitmap mImage;
     private String mCity;
     private String mCountry;
     private int mSunrise;
@@ -24,6 +29,7 @@ public class Weather {
     private float mWindDeg;
     private int mCloud;
     private Date mDate;
+    private float mPrecipitations;
 
     public void setmDate(long timestamp) {
         this.mDate = new Date(timestamp * 1000);
@@ -35,6 +41,63 @@ public class Weather {
 
     public String getmIconPath() {
         return mIconPath;
+    }
+
+    public String getmCity() {
+        return mCity;
+    }
+
+    public String getmCountry() {
+        return mCountry;
+    }
+
+    public String getmCondition() {
+        return mCondition;
+    }
+
+    public int getmHumidity() {
+        return mHumidity;
+    }
+
+    public int getmPressure() {
+        return mPressure;
+    }
+
+    public float getmWindSpeed() {
+        return mWindSpeed;
+    }
+
+    public Bitmap getIcon() {
+        //Log.d(getClass().getName(), ""+mIcon.length);
+        //return BitmapFactory.decodeByteArray(mIcon, 0, mIcon.length);
+        return mImage;
+    }
+
+    public void setmImage (Bitmap image){
+        this.mImage = image;
+    }
+
+    public String getWindDirection() {
+        if((mWindDeg < 22.5) || (mWindDeg > 337.5)) return "N";
+        if(mWindDeg < 67.5) return "NE";
+        if(mWindDeg < 112.5) return "E";
+        if(mWindDeg < 157.5) return "SE";
+        if(mWindDeg < 202.5) return "S";
+        if(mWindDeg < 247.5) return "SW";
+        if(mWindDeg < 292.5) return "W";
+        else return "NW";
+    }
+
+    public float getmTemp() {
+        return mTemp;
+    }
+
+    public float getmPrecipitations() {
+        return mPrecipitations;
+    }
+
+    public void setmPrecipitations(float precipitations) {
+        this.mPrecipitations = precipitations;
     }
 
     public void setmIconPath(String mIconPath) {

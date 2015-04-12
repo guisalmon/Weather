@@ -1,5 +1,7 @@
 package android.weather.rob.org.weather.client;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -28,6 +30,7 @@ public class WeatherHttpClient {
             } else {
                 con = (HttpURLConnection) (new URL(FORECAST_URL + location)).openConnection();
             }
+            Log.d(getClass().getName(), con.toString());
             con.setRequestMethod("GET");
             con.setDoInput(true);
             con.setDoOutput(true);
@@ -61,11 +64,12 @@ public class WeatherHttpClient {
 
     }
 
-    public byte[] getImage(String code) {
+    public Bitmap getImage(String code) {
         HttpURLConnection con = null;
         InputStream is = null;
         try {
-            con = (HttpURLConnection) (new URL(IMG_URL + code)).openConnection();
+            con = (HttpURLConnection) (new URL(IMG_URL + code +".png")).openConnection();
+            Log.d(getClass().getName(), con.toString());
             con.setRequestMethod("GET");
             con.setDoInput(true);
             con.setDoOutput(true);
@@ -73,13 +77,9 @@ public class WeatherHttpClient {
 
             // Let's read the response
             is = con.getInputStream();
-            byte[] buffer = new byte[1024];
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Bitmap b = BitmapFactory.decodeStream(is);
 
-            while (is.read(buffer) != -1)
-                baos.write(buffer);
-
-            return baos.toByteArray();
+            return b;
         } catch (Throwable t) {
             t.printStackTrace();
         } finally {
