@@ -60,7 +60,7 @@ public class WeatherJSONParser {
         new DownloadWeatherTask().execute(listener);
     }
 
-    private static ArrayList<Forecast> getForecastWeather(String data) throws JSONException{
+    private static ArrayList<Forecast> getForecastWeather(String data) throws JSONException {
         JSONObject jObj = null;
         ArrayList<Forecast> forecasts = new ArrayList<>();
 
@@ -143,8 +143,15 @@ public class WeatherJSONParser {
         JSONObject cObj = getObject("clouds", jObj);
         weather.setmCloud(getInt("all", cObj));
 
-        JSONObject rObj = getObject("rain", jObj);
-        weather.setmPrecipitations(getFloat("3h", rObj));
+        // When no rainfall has been recorded, instead of sending 0mm as a value the api doesn't
+        // send any rain JSON object, the try catch block is a fix for this case.
+        try {
+            JSONObject rObj = getObject("rain", jObj);
+            weather.setmPrecipitations(getFloat("3h", rObj));
+        } catch (JSONException e) {
+            weather.setmPrecipitations(0);
+        }
+
         return weather;
     }
 
