@@ -1,5 +1,6 @@
 package android.weather.rob.org.weather.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -102,6 +103,8 @@ public class WeatherActivity extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent i = new Intent(this, WeatherPreferenceActivity.class);
+            startActivity(i);
             return true;
         }
 

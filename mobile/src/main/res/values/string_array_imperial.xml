@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="imperial">
+        <item>@string/fahrenheit</item>
+        <item>@string/inches</item>
+        <item>@string/knot</item>
+    </string-array>
+
+</resources>

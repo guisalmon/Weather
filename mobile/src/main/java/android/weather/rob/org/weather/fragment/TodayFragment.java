@@ -2,11 +2,13 @@ package android.weather.rob.org.weather.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -41,6 +43,8 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     private Weather mWeather = null;
     private View mRootView;
     private OnFragmentInteractionListener mListener;
+    private static Weather.format sUnitFormat;
+    private String[] mUnits;
 
     public TodayFragment() {
 
@@ -66,11 +70,11 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     public void onCurrentWeatherTaskCompleted(Weather weather) {
         Log.d(getClass().getName(), weather.toString());
         ((TextView) getActivity().findViewById(R.id.todayLocation)).setText(weather.getmCity()+", "+weather.getmCountry());
-        ((TextView) getActivity().findViewById(R.id.todayWeatherDescription)).setText(weather.getmTemp()+"°C | "+weather.getmCondition());
+        ((TextView) getActivity().findViewById(R.id.todayWeatherDescription)).setText(weather.getmTemp()+mUnits[0]+" | "+weather.getmCondition());
         ((TextView) getActivity().findViewById(R.id.todayWeatherHumidity)).setText(weather.getmHumidity()+"%");
-        ((TextView) getActivity().findViewById(R.id.todayWeatherPrecipitations)).setText(weather.getmPrecipitations()+" mm");
+        ((TextView) getActivity().findViewById(R.id.todayWeatherPrecipitations)).setText(weather.getmPrecipitations()+" "+mUnits[1]);
         ((TextView) getActivity().findViewById(R.id.todayWeatherPressure)).setText(weather.getmPressure()+" hPa");
-        ((TextView) getActivity().findViewById(R.id.todayWeatherWindSpeed)).setText(weather.getmWindSpeed()+" km/h");
+        ((TextView) getActivity().findViewById(R.id.todayWeatherWindSpeed)).setText(weather.getmWindSpeed()+" "+mUnits[2]);
         ((TextView) getActivity().findViewById(R.id.todayWeatherDirection)).setText(weather.getWindDirection());
         ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageBitmap(weather.getIcon());
     }
@@ -94,6 +98,14 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
             mWeatherUpdater = new WeatherJSONParser();
             mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
         }
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String unitStyle = preferences.getString("unitStyle", "0");
+        if (unitStyle.equals("2")){
+            sUnitFormat = Weather.format.IMPERIAL;
+        }else{
+            sUnitFormat = Weather.format.METRIC;
+        }
         super.onActivityCreated(savedInstanceState);
 
     }
@@ -109,6 +121,13 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if (sUnitFormat == Weather.format.METRIC){
+            mUnits = getResources().getStringArray(R.array.metric);
+        } else {
+            mUnits = getResources().getStringArray(R.array.imperial);
+        }
+
         // Inflate the layout for this fragment
         mRootView = inflater.inflate(R.layout.fragment_today, container, false);
         return mRootView;
@@ -141,7 +160,7 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
         if (mRootView == null) return;
-        mWeatherUpdater.UpdateCurrentDataByLocation(location, this, Weather.format.METRIC);
+        mWeatherUpdater.UpdateCurrentDataByLocation(location, this, sUnitFormat);
     }
 
     @Override

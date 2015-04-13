@@ -9,7 +9,16 @@
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="celsius">°C</string>
+    <string name="fahrenheit">°F</string>
+    <string name="millimeter">mm</string>
+    <string name="kilometer_per_hour">km/h</string>
+    <string name="knot">kn</string>
+    <string name="inches">in</string>
+    <string name="title_activity_weather_preference">WeatherPreferenceActivity</string>
+
+    <string name="preference_unit_title">Units</string>
+    <string name="preference_unit_summary">Select whether you what to use the metric system or the imperial one</string>
+
 
 </resources>
