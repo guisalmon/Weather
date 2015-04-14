@@ -12,10 +12,6 @@ public class Forecast {
     private float mEveTemp;
     private float mMorningTemp;
 
-    public void setmDayTemp(int mDayTemp) {
-        this.mDayTemp = mDayTemp;
-    }
-
     public void setmMinTemp(float mMinTemp) {
         this.mMinTemp = mMinTemp;
     }
@@ -36,16 +32,20 @@ public class Forecast {
         this.mMorningTemp = mMorningTemp;
     }
 
-    public void setWeather(Weather weather) {
-        this.weather = weather;
-    }
-
     public Weather getWeather() {
         return weather;
     }
 
+    public void setWeather(Weather weather) {
+        this.weather = weather;
+    }
+
     public int getmDayTemp() {
         return mDayTemp;
+    }
+
+    public void setmDayTemp(int mDayTemp) {
+        this.mDayTemp = mDayTemp;
     }
 
     @Override

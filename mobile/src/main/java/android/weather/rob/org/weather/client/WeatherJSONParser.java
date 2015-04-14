@@ -185,7 +185,6 @@ public class WeatherJSONParser {
                 try {
                     forecast = getForecastWeather(data);
                 } catch (JSONException e) {
-                    Log.e("JSONParser", "Weather forecast data unavailable");
                     e.printStackTrace();
                     return null;
                 }
@@ -227,7 +226,6 @@ public class WeatherJSONParser {
                     // Let's retrieve the icon
                     weather.setmImage((new WeatherHttpClient()).getImage(weather.getmIconPath()));
                 } catch (JSONException e) {
-                    Log.e("JSONParser", "Weather data unavailable");
                     e.printStackTrace();
                     return null;
                 }

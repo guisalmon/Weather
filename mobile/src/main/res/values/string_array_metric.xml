@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="metric">
-        <item>@string/celsius</item>
-        <item>@string/millimeter</item>
-        <item>@string/kilometer_per_hour</item>
-    </string-array>
-</resources>

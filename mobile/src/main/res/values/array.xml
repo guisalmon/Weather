@@ -9,4 +9,16 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+
+    <string-array name="imperial">
+        <item>@string/fahrenheit</item>
+        <item>@string/inches</item>
+        <item>@string/knot</item>
+    </string-array>
+
+    <string-array name="metric">
+        <item>@string/celsius</item>
+        <item>@string/millimeter</item>
+        <item>@string/kilometer_per_hour</item>
+    </string-array>
 </resources>

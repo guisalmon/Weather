@@ -22,17 +22,16 @@ import android.weather.rob.org.weather.utility.Weather;
 public class WeatherActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, ForecastFragment.OnFragmentInteractionListener, TodayFragment.OnFragmentInteractionListener {
 
+    public Weather.format unitFormat = Weather.format.IMPERIAL;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
     private int mCurrentFragment = -1;
-    public Weather.format unitFormat = Weather.format.IMPERIAL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +53,10 @@ public class WeatherActivity extends ActionBarActivity
     protected void onResume() {
         super.onResume();
         String unitStyle = PreferenceManager.getDefaultSharedPreferences(this).getString("unitStyle", "1");
-        if (unitStyle.equals("1")){
+        if (unitStyle.equals("1")) {
             unitFormat = Weather.format.METRIC;
-            Log.e(getClass().getName(), "METRIC");
         } else {
             unitFormat = Weather.format.IMPERIAL;
-            Log.e(getClass().getName(), "IMPERIAL");
         }
     }
 
@@ -75,7 +72,7 @@ public class WeatherActivity extends ActionBarActivity
         mCurrentFragment = position;
     }
 
-    private void setFragment (int i) {
+    private void setFragment(int i) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = new TodayFragment();
         switch (i) {

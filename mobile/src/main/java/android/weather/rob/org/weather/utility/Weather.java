@@ -1,8 +1,6 @@
 package android.weather.rob.org.weather.utility;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -37,7 +35,7 @@ public class Weather {
         this.mDate = new Date(timestamp * 1000);
     }
 
-    public void setmDateToCurrentTime () {
+    public void setmDateToCurrentTime() {
         mDate = new Date();
     }
 
@@ -45,52 +43,86 @@ public class Weather {
         return mIconPath;
     }
 
+    public void setmIconPath(String mIconPath) {
+        this.mIconPath = mIconPath;
+    }
+
     public String getmCity() {
         return mCity;
+    }
+
+    public void setmCity(String mCity) {
+        this.mCity = mCity;
     }
 
     public String getmCountry() {
         return mCountry;
     }
 
+    public void setmCountry(String mCountry) {
+        this.mCountry = mCountry;
+    }
+
     public String getmCondition() {
         return mCondition;
+    }
+
+    public void setmCondition(String mCondition) {
+        this.mCondition = mCondition;
     }
 
     public int getmHumidity() {
         return mHumidity;
     }
 
+    public void setmHumidity(int mHumidity) {
+        this.mHumidity = mHumidity;
+    }
+
     public int getmPressure() {
         return mPressure;
+    }
+
+    public void setmPressure(int mPressure) {
+        this.mPressure = mPressure;
     }
 
     public float getmWindSpeed() {
         return mWindSpeed;
     }
 
-    public String getmDesc() { return mDesc; }
+    public void setmWindSpeed(float mWindSpeed) {
+        this.mWindSpeed = mWindSpeed;
+    }
 
-    public String getDay() {
+    public String getmDesc() {
+        return mDesc;
+    }
+
+    public void setmDesc(String mDesc) {
+        this.mDesc = mDesc;
+    }
+
+    public day getDay() {
         Calendar cal = new GregorianCalendar();
         cal.setTime(mDate);
-        switch (cal.get(Calendar.DAY_OF_WEEK)){
+        switch (cal.get(Calendar.DAY_OF_WEEK)) {
             case Calendar.MONDAY:
-                return "Monday";
+                return day.MONDAY;
             case Calendar.TUESDAY:
-                return "Tuesday";
+                return day.TUESDAY;
             case Calendar.FRIDAY:
-                return "Friday";
+                return day.FRIDAY;
             case Calendar.WEDNESDAY:
-                return "Wednesday";
+                return day.WEDNESDAY;
             case Calendar.THURSDAY:
-                return "Thursday";
+                return day.THURSDAY;
             case Calendar.SATURDAY:
-                return "Saturday";
+                return day.SATURDAY;
             case Calendar.SUNDAY:
-                return "Sunday";
+                return day.SUNDAY;
         }
-        return "";
+        return day.NONE;
     }
 
     public Bitmap getIcon() {
@@ -99,23 +131,27 @@ public class Weather {
         return mImage;
     }
 
-    public void setmImage (Bitmap image){
+    public void setmImage(Bitmap image) {
         this.mImage = image;
     }
 
     public String getWindDirection() {
-        if((mWindDeg < 22.5) || (mWindDeg > 337.5)) return "N";
-        if(mWindDeg < 67.5) return "NE";
-        if(mWindDeg < 112.5) return "E";
-        if(mWindDeg < 157.5) return "SE";
-        if(mWindDeg < 202.5) return "S";
-        if(mWindDeg < 247.5) return "SW";
-        if(mWindDeg < 292.5) return "W";
+        if ((mWindDeg < 22.5) || (mWindDeg > 337.5)) return "N";
+        if (mWindDeg < 67.5) return "NE";
+        if (mWindDeg < 112.5) return "E";
+        if (mWindDeg < 157.5) return "SE";
+        if (mWindDeg < 202.5) return "S";
+        if (mWindDeg < 247.5) return "SW";
+        if (mWindDeg < 292.5) return "W";
         else return "NW";
     }
 
     public int getmTemp() {
         return mTemp;
+    }
+
+    public void setmTemp(int mTemp) {
+        this.mTemp = mTemp;
     }
 
     public float getmPrecipitations() {
@@ -126,28 +162,8 @@ public class Weather {
         this.mPrecipitations = precipitations;
     }
 
-    public void setmIconPath(String mIconPath) {
-        this.mIconPath = mIconPath;
-    }
-
     public void setmId(int mId) {
         this.mId = mId;
-    }
-
-    public void setmDesc(String mDesc) {
-        this.mDesc = mDesc;
-    }
-
-    public void setmCondition(String mCondition) {
-        this.mCondition = mCondition;
-    }
-
-    public void setmHumidity(int mHumidity) {
-        this.mHumidity = mHumidity;
-    }
-
-    public void setmPressure(int mPressure) {
-        this.mPressure = mPressure;
     }
 
     public void setmTempMax(float mTempMax) {
@@ -156,14 +172,6 @@ public class Weather {
 
     public void setmTempMin(float mTempMin) {
         this.mTempMin = mTempMin;
-    }
-
-    public void setmTemp(int mTemp) {
-        this.mTemp = mTemp;
-    }
-
-    public void setmWindSpeed(float mWindSpeed) {
-        this.mWindSpeed = mWindSpeed;
     }
 
     public void setmWindDeg(float mWindDeg) {
@@ -176,14 +184,6 @@ public class Weather {
 
     public void iconData(byte[] icon) {
         mIcon = icon;
-    }
-
-    public void setmCity(String mCity) {
-        this.mCity = mCity;
-    }
-
-    public void setmCountry(String mCountry) {
-        this.mCountry = mCountry;
     }
 
     public void setmSunrise(int mSunrise) {
@@ -219,5 +219,16 @@ public class Weather {
     public enum format {
         METRIC,
         IMPERIAL
+    }
+
+    public enum day {
+        MONDAY,
+        TUESDAY,
+        WEDNESDAY,
+        THURSDAY,
+        FRIDAY,
+        SATURDAY,
+        SUNDAY,
+        NONE
     }
 }

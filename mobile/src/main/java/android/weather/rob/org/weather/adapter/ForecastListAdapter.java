@@ -62,9 +62,29 @@ public class ForecastListAdapter extends ArrayAdapter<Forecast> {
         holder.image.setImageBitmap(forecast.getWeather().getIcon());
         holder.temp.setText("" + forecast.getmDayTemp() + mTempUnit);
         holder.desc.setText(forecast.getWeather().getmDesc());
-        holder.day.setText(forecast.getWeather().getDay());
+        holder.day.setText(getDay(forecast.getWeather().getDay()));
 
         return row;
+    }
+
+    private String getDay (Weather.day d){
+        switch (d) {
+            case MONDAY:
+                return mContext.getResources().getString(R.string.monday);
+            case TUESDAY:
+                return mContext.getResources().getString(R.string.tuesday);
+            case WEDNESDAY:
+                return mContext.getResources().getString(R.string.wednesday);
+            case THURSDAY:
+                return mContext.getResources().getString(R.string.thursday);
+            case FRIDAY:
+                return mContext.getResources().getString(R.string.friday);
+            case SATURDAY:
+                return mContext.getResources().getString(R.string.saturday);
+            case SUNDAY:
+                return mContext.getResources().getString(R.string.sunday);
+        }
+        return "";
     }
 
     static class ForecastHolder {

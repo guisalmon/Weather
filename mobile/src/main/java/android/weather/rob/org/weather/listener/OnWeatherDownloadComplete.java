@@ -7,5 +7,6 @@ import android.weather.rob.org.weather.utility.Weather;
  */
 public interface OnWeatherDownloadComplete {
     void onCurrentWeatherTaskCompleted(Weather weather);
+
     void onCurrentWeatherTaskFailed();
 }

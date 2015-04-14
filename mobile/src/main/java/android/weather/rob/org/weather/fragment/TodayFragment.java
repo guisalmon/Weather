@@ -2,13 +2,10 @@ package android.weather.rob.org.weather.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -69,12 +66,12 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     @Override
     public void onCurrentWeatherTaskCompleted(Weather weather) {
         Log.d(getClass().getName(), weather.toString());
-        ((TextView) getActivity().findViewById(R.id.todayLocation)).setText(weather.getmCity()+", "+weather.getmCountry());
-        ((TextView) getActivity().findViewById(R.id.todayWeatherDescription)).setText(weather.getmTemp()+mUnits[0]+" | "+weather.getmCondition());
-        ((TextView) getActivity().findViewById(R.id.todayWeatherHumidity)).setText(weather.getmHumidity()+"%");
-        ((TextView) getActivity().findViewById(R.id.todayWeatherPrecipitations)).setText(weather.getmPrecipitations()+" "+mUnits[1]);
-        ((TextView) getActivity().findViewById(R.id.todayWeatherPressure)).setText(weather.getmPressure()+" hPa");
-        ((TextView) getActivity().findViewById(R.id.todayWeatherWindSpeed)).setText(weather.getmWindSpeed()+" "+mUnits[2]);
+        ((TextView) getActivity().findViewById(R.id.todayLocation)).setText(weather.getmCity() + ", " + weather.getmCountry());
+        ((TextView) getActivity().findViewById(R.id.todayWeatherDescription)).setText(weather.getmTemp() + mUnits[0] + " | " + weather.getmCondition());
+        ((TextView) getActivity().findViewById(R.id.todayWeatherHumidity)).setText(weather.getmHumidity() + "%");
+        ((TextView) getActivity().findViewById(R.id.todayWeatherPrecipitations)).setText(weather.getmPrecipitations() + " " + mUnits[1]);
+        ((TextView) getActivity().findViewById(R.id.todayWeatherPressure)).setText(weather.getmPressure() + " hPa");
+        ((TextView) getActivity().findViewById(R.id.todayWeatherWindSpeed)).setText(weather.getmWindSpeed() + " " + mUnits[2]);
         ((TextView) getActivity().findViewById(R.id.todayWeatherDirection)).setText(weather.getWindDirection());
         ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageBitmap(weather.getIcon());
     }
@@ -100,7 +97,7 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
 
     @Override
     public void onResume() {
-        if (((WeatherActivity)getActivity()).unitFormat == Weather.format.METRIC){
+        if (((WeatherActivity) getActivity()).unitFormat == Weather.format.METRIC) {
             mUnits = getResources().getStringArray(R.array.metric);
         } else {
             mUnits = getResources().getStringArray(R.array.imperial);
@@ -141,7 +138,7 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
         super.onAttach(activity);
         try {
             mListener = (OnFragmentInteractionListener) activity;
-            if (((WeatherActivity)getActivity()).unitFormat == Weather.format.METRIC){
+            if (((WeatherActivity) getActivity()).unitFormat == Weather.format.METRIC) {
                 mUnits = getResources().getStringArray(R.array.metric);
             } else {
                 mUnits = getResources().getStringArray(R.array.imperial);
@@ -161,7 +158,7 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
         if (mRootView == null) return;
-        mWeatherUpdater.UpdateCurrentDataByLocation(location, this, ((WeatherActivity)getActivity()).unitFormat);
+        mWeatherUpdater.UpdateCurrentDataByLocation(location, this, ((WeatherActivity) getActivity()).unitFormat);
     }
 
     @Override

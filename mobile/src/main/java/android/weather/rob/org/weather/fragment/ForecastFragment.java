@@ -18,7 +18,6 @@ import android.weather.rob.org.weather.geolocation.Geolocation;
 import android.weather.rob.org.weather.geolocation.GeolocationListener;
 import android.weather.rob.org.weather.listener.OnForecastDownloadComplete;
 import android.weather.rob.org.weather.utility.Forecast;
-import android.weather.rob.org.weather.utility.Weather;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -63,12 +62,12 @@ public class ForecastFragment extends ListFragment implements AbsListView.OnItem
 
     @Override
     public void onForecastTaskFailed() {
-        Toast.makeText(getActivity(), "Downloading of the forecast data failed, check your internet connection", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.error_forecast_download, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
-        mWeatherUpdater.UpdateForecastDataByLocation(location, this, ((WeatherActivity)getActivity()).unitFormat);
+        mWeatherUpdater.UpdateForecastDataByLocation(location, this, ((WeatherActivity) getActivity()).unitFormat);
     }
 
     @Override
@@ -84,10 +83,10 @@ public class ForecastFragment extends ListFragment implements AbsListView.OnItem
             }
             mForecast = forecast;
             if (getListView() != null) {
-                mAdapter = new ForecastListAdapter(getActivity(), R.layout.forecast_list_item, mForecast, (((WeatherActivity)getActivity()).unitFormat));
+                mAdapter = new ForecastListAdapter(getActivity(), R.layout.forecast_list_item, mForecast, (((WeatherActivity) getActivity()).unitFormat));
                 setListAdapter(mAdapter);
             } else {
-                Log.w(getClass().getName(),"ListView is null");
+                Log.w(getClass().getName(), "ListView is null");
             }
         }
     }
@@ -109,7 +108,7 @@ public class ForecastFragment extends ListFragment implements AbsListView.OnItem
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAdapter = new ForecastListAdapter(getActivity(), R.layout.forecast_list_item, mForecast, (((WeatherActivity)getActivity()).unitFormat));
+        mAdapter = new ForecastListAdapter(getActivity(), R.layout.forecast_list_item, mForecast, (((WeatherActivity) getActivity()).unitFormat));
     }
 
     @Override
