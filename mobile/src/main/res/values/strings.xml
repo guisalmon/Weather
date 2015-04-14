@@ -19,6 +19,7 @@
 
     <string name="preference_unit_title">Units</string>
     <string name="preference_unit_summary">Select whether you what to use the metric system or the imperial one</string>
+    <string name="preference_unit_default">1</string>
 
 
 </resources>

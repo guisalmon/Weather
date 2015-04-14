@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.weather.rob.org.weather.R;
+import android.weather.rob.org.weather.activity.WeatherActivity;
 import android.weather.rob.org.weather.client.WeatherJSONParser;
 import android.weather.rob.org.weather.geolocation.Geolocation;
 import android.weather.rob.org.weather.geolocation.GeolocationListener;
@@ -43,7 +44,6 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     private Weather mWeather = null;
     private View mRootView;
     private OnFragmentInteractionListener mListener;
-    private static Weather.format sUnitFormat;
     private String[] mUnits;
 
     public TodayFragment() {
@@ -94,20 +94,22 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         // start geolocation
 
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
+    @Override
+    public void onResume() {
+        if (((WeatherActivity)getActivity()).unitFormat == Weather.format.METRIC){
+            mUnits = getResources().getStringArray(R.array.metric);
+        } else {
+            mUnits = getResources().getStringArray(R.array.imperial);
+        }
         if (mCurrentLocation == null) {
             mWeatherUpdater = new WeatherJSONParser();
             mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
         }
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String unitStyle = preferences.getString("unitStyle", "0");
-        if (unitStyle.equals("2")){
-            sUnitFormat = Weather.format.IMPERIAL;
-        }else{
-            sUnitFormat = Weather.format.METRIC;
-        }
-        super.onActivityCreated(savedInstanceState);
-
+        super.onResume();
     }
 
     @Override
@@ -121,12 +123,6 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        if (sUnitFormat == Weather.format.METRIC){
-            mUnits = getResources().getStringArray(R.array.metric);
-        } else {
-            mUnits = getResources().getStringArray(R.array.imperial);
-        }
 
         // Inflate the layout for this fragment
         mRootView = inflater.inflate(R.layout.fragment_today, container, false);
@@ -145,6 +141,11 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
         super.onAttach(activity);
         try {
             mListener = (OnFragmentInteractionListener) activity;
+            if (((WeatherActivity)getActivity()).unitFormat == Weather.format.METRIC){
+                mUnits = getResources().getStringArray(R.array.metric);
+            } else {
+                mUnits = getResources().getStringArray(R.array.imperial);
+            }
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -160,7 +161,7 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
         if (mRootView == null) return;
-        mWeatherUpdater.UpdateCurrentDataByLocation(location, this, sUnitFormat);
+        mWeatherUpdater.UpdateCurrentDataByLocation(location, this, ((WeatherActivity)getActivity()).unitFormat);
     }
 
     @Override

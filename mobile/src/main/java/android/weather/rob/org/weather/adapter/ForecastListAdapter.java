@@ -2,11 +2,14 @@ package android.weather.rob.org.weather.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.weather.rob.org.weather.R;
 import android.weather.rob.org.weather.utility.Forecast;
+import android.weather.rob.org.weather.utility.Weather;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,12 +24,19 @@ public class ForecastListAdapter extends ArrayAdapter<Forecast> {
     int mLayoutResourceId;
     List<Forecast> mForecasts = null;
     ForecastHolder holder = null;
+    String mTempUnit;
 
-    public ForecastListAdapter(Context context, int resource, List<Forecast> forecasts) {
+
+    public ForecastListAdapter(Context context, int resource, List<Forecast> forecasts, Weather.format format) {
         super(context, resource, forecasts);
         mContext = context;
         mLayoutResourceId = resource;
         mForecasts = forecasts;
+        if (format == Weather.format.METRIC) {
+            mTempUnit = "°C";
+        } else {
+            mTempUnit = "°F";
+        }
     }
 
     @Override
@@ -50,7 +60,7 @@ public class ForecastListAdapter extends ArrayAdapter<Forecast> {
 
         Forecast forecast = mForecasts.get(position);
         holder.image.setImageBitmap(forecast.getWeather().getIcon());
-        holder.temp.setText("" + forecast.getmDayTemp()+"°C");
+        holder.temp.setText("" + forecast.getmDayTemp() + mTempUnit);
         holder.desc.setText(forecast.getWeather().getmDesc());
         holder.day.setText(forecast.getWeather().getDay());
 

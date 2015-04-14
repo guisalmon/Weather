@@ -10,6 +10,7 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.weather.rob.org.weather.R;
+import android.weather.rob.org.weather.activity.WeatherActivity;
 import android.weather.rob.org.weather.adapter.ForecastListAdapter;
 import android.weather.rob.org.weather.client.WeatherJSONParser;
 import android.weather.rob.org.weather.fragment.dummy.DummyContent;
@@ -20,8 +21,6 @@ import android.weather.rob.org.weather.utility.Forecast;
 import android.weather.rob.org.weather.utility.Weather;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class ForecastFragment extends ListFragment implements AbsListView.OnItem
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private ArrayAdapter mAdapter;
+    private ForecastListAdapter mAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -69,7 +68,7 @@ public class ForecastFragment extends ListFragment implements AbsListView.OnItem
 
     @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
-        mWeatherUpdater.UpdateForecastDataByLocation(location, this, Weather.format.METRIC);
+        mWeatherUpdater.UpdateForecastDataByLocation(location, this, ((WeatherActivity)getActivity()).unitFormat);
     }
 
     @Override
@@ -85,7 +84,7 @@ public class ForecastFragment extends ListFragment implements AbsListView.OnItem
             }
             mForecast = forecast;
             if (getListView() != null) {
-                mAdapter = new ForecastListAdapter(getActivity(), R.layout.forecast_list_item, mForecast);
+                mAdapter = new ForecastListAdapter(getActivity(), R.layout.forecast_list_item, mForecast, (((WeatherActivity)getActivity()).unitFormat));
                 setListAdapter(mAdapter);
             } else {
                 Log.w(getClass().getName(),"ListView is null");
@@ -96,18 +95,21 @@ public class ForecastFragment extends ListFragment implements AbsListView.OnItem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                R.layout.forecast_list_item, android.R.id.text1, DummyContent.ITEMS);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mCurrentLocation == null) {
+            mWeatherUpdater = new WeatherJSONParser();
+            mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
+        }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (mCurrentLocation == null) {
-            mWeatherUpdater = new WeatherJSONParser();
-            mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
-        }
-        mAdapter = new ForecastListAdapter(getActivity(), R.layout.forecast_list_item, mForecast);
+        mAdapter = new ForecastListAdapter(getActivity(), R.layout.forecast_list_item, mForecast, (((WeatherActivity)getActivity()).unitFormat));
     }
 
     @Override

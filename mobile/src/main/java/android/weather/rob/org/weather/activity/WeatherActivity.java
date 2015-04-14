@@ -3,17 +3,20 @@ package android.weather.rob.org.weather.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.weather.rob.org.weather.R;
 import android.weather.rob.org.weather.fragment.ForecastFragment;
 import android.weather.rob.org.weather.fragment.NavigationDrawerFragment;
 import android.weather.rob.org.weather.fragment.TodayFragment;
+import android.weather.rob.org.weather.utility.Weather;
 
 
 public class WeatherActivity extends ActionBarActivity
@@ -28,6 +31,8 @@ public class WeatherActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private int mCurrentFragment = -1;
+    public Weather.format unitFormat = Weather.format.IMPERIAL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +47,38 @@ public class WeatherActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String unitStyle = PreferenceManager.getDefaultSharedPreferences(this).getString("unitStyle", "1");
+        if (unitStyle.equals("1")){
+            unitFormat = Weather.format.METRIC;
+            Log.e(getClass().getName(), "METRIC");
+        } else {
+            unitFormat = Weather.format.IMPERIAL;
+            Log.e(getClass().getName(), "IMPERIAL");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
+        setFragment(position);
+        mCurrentFragment = position;
+    }
+
+    private void setFragment (int i) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = new TodayFragment();
-        switch (position) {
+        switch (i) {
             case 0:
                 fragment = new TodayFragment();
                 break;
@@ -91,6 +120,7 @@ public class WeatherActivity extends ActionBarActivity
             restoreActionBar();
             return true;
         }
+
         return super.onCreateOptionsMenu(menu);
     }
 
