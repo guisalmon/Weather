@@ -20,11 +20,11 @@ import java.util.List;
  * Created by guillaume on 12-04-15.
  */
 public class ForecastListAdapter extends ArrayAdapter<Forecast> {
-    Context mContext;
-    int mLayoutResourceId;
-    List<Forecast> mForecasts = null;
-    ForecastHolder holder = null;
-    String mTempUnit;
+    private Context mContext;
+    private int mLayoutResourceId;
+    private List<Forecast> mForecasts = null;
+    private ForecastHolder holder = null;
+    private String mTempUnit;
 
 
     public ForecastListAdapter(Context context, int resource, List<Forecast> forecasts, Weather.format format) {

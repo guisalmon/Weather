@@ -3,6 +3,7 @@ package android.weather.rob.org.weather.fragment;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -18,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.weather.rob.org.weather.R;
+import android.weather.rob.org.weather.adapter.DrawerlistAdapter;
+import android.weather.rob.org.weather.utility.DrawerItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -97,13 +100,12 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
+        mDrawerListView.setAdapter(new DrawerlistAdapter(
                 getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.today_section),
-                        getString(R.string.forecast_section),
+                R.layout.drawer_list_item,
+                new DrawerItem[]{
+                        new DrawerItem(R.drawable.ic_drawer_today_dark, getString(R.string.today_section)),
+                        new DrawerItem(R.drawable.ic_drawer_forecast_dark, getString(R.string.forecast_section))
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;

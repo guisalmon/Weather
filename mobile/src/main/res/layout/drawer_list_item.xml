@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/margins_drawer_item"
+    android:paddingTop="@dimen/margins_drawer_item"
+    android:paddingBottom="@dimen/margins_drawer_item"
+    android:gravity="center_vertical">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/height_image_drawer_item"
+        android:id="@+id/drawer_item_icon"
+        android:src="@drawable/ic_drawer_forecast_dark"
+        android:layout_marginRight="@dimen/spacings_drawer_item"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/drawer_item_title"
+        android:text="Forecast"
+        android:textColor="@color/drawer_item_text_color"/>
+
+
+</LinearLayout>
