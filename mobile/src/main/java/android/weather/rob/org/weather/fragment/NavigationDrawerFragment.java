@@ -3,7 +3,6 @@ package android.weather.rob.org.weather.fragment;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -22,7 +21,6 @@ import android.weather.rob.org.weather.R;
 import android.weather.rob.org.weather.adapter.DrawerlistAdapter;
 import android.weather.rob.org.weather.utility.DrawerItem;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
@@ -54,6 +52,7 @@ public class NavigationDrawerFragment extends Fragment {
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
+    private DrawerlistAdapter mAdapter;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
 
@@ -100,13 +99,14 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new DrawerlistAdapter(
+        mAdapter = new DrawerlistAdapter(
                 getActionBar().getThemedContext(),
                 R.layout.drawer_list_item,
                 new DrawerItem[]{
                         new DrawerItem(R.drawable.ic_drawer_today_dark, getString(R.string.today_section)),
                         new DrawerItem(R.drawable.ic_drawer_forecast_dark, getString(R.string.forecast_section))
-                }));
+                });
+        mDrawerListView.setAdapter(mAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
@@ -191,6 +191,10 @@ public class NavigationDrawerFragment extends Fragment {
 
     private void selectItem(int position) {
         mCurrentSelectedPosition = position;
+        if (mAdapter != null) {
+            mAdapter.setmSelectedItem(position);
+        }
+
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
         }

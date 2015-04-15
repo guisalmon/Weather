@@ -1,19 +1,15 @@
 package android.weather.rob.org.weather.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.view.ContextThemeWrapper;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.weather.rob.org.weather.R;
 import android.weather.rob.org.weather.utility.DrawerItem;
-import android.weather.rob.org.weather.utility.Forecast;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 /**
  * Created by guillaume on 14-04-15.
@@ -21,11 +17,20 @@ import java.util.ArrayList;
 public class DrawerlistAdapter extends ArrayAdapter<DrawerItem> {
     private Context mContext;
     private DrawerItem[] mItems;
+    private int mSelectedItem;
 
     public DrawerlistAdapter(Context context, int resource, DrawerItem[] objects) {
         super(context, resource, objects);
         this.mContext = context;
         this.mItems = objects;
+    }
+
+    public int getmSelectedItem() {
+        return mSelectedItem;
+    }
+
+    public void setmSelectedItem(int mSelectedItem) {
+        this.mSelectedItem = mSelectedItem;
     }
 
     @Override
@@ -50,6 +55,14 @@ public class DrawerlistAdapter extends ArrayAdapter<DrawerItem> {
 
         itemIcon.setImageResource(mItems[position].icon);
         itemTitle.setText(mItems[position].title);
+
+        if (mSelectedItem == position) {
+            itemTitle.setTypeface(Typeface.DEFAULT_BOLD);
+            itemTitle.setTextColor(mContext.getResources().getColor(R.color.base_blue));
+        } else {
+            itemTitle.setTypeface(Typeface.DEFAULT);
+            itemTitle.setTextColor(mContext.getResources().getColor(android.R.color.black));
+        }
 
 
         return convertView;
