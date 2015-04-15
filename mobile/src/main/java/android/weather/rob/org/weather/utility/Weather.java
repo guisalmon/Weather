@@ -1,6 +1,7 @@
 package android.weather.rob.org.weather.utility;
 
 import android.graphics.Bitmap;
+import android.weather.rob.org.weather.R;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -131,6 +132,12 @@ public class Weather {
         return mImage;
     }
 
+    /**
+     * Sets an icon for this weather
+     * @deprecated getIconRes() should be used to directly get the icon resource suitable for the weather
+     * @param image to be set as a weather icon
+     */
+    @Deprecated
     public void setmImage(Bitmap image) {
         this.mImage = image;
     }
@@ -144,6 +151,64 @@ public class Weather {
         if (mWindDeg < 247.5) return "SW";
         if (mWindDeg < 292.5) return "W";
         else return "NW";
+    }
+
+    public int getIconRes() {
+        if (mIconPath.equals("01d")) {
+            return R.drawable.ic_01d;
+        }
+        if (mIconPath.equals("01n")) {
+            return R.drawable.ic_01n;
+        }
+        if (mIconPath.equals("02d")) {
+            return R.drawable.ic_02d;
+        }
+        if (mIconPath.equals("02n")) {
+            return R.drawable.ic_02n;
+        }
+        if (mIconPath.equals("03d")) {
+            return R.drawable.ic_03d;
+        }
+        if (mIconPath.equals("03n")) {
+            return R.drawable.ic_03n;
+        }
+        if (mIconPath.equals("04d")) {
+            return R.drawable.ic_04d;
+        }
+        if (mIconPath.equals("04n")) {
+            return R.drawable.ic_04n;
+        }
+        if (mIconPath.equals("09d")) {
+            return R.drawable.ic_09d;
+        }
+        if (mIconPath.equals("09n")) {
+            return R.drawable.ic_09n;
+        }
+        if (mIconPath.equals("10d")) {
+            return R.drawable.ic_10d;
+        }
+        if (mIconPath.equals("10n")) {
+            return R.drawable.ic_10n;
+        }
+        if (mIconPath.equals("11d")) {
+            return R.drawable.ic_11d;
+        }
+        if (mIconPath.equals("11n")) {
+            return R.drawable.ic_11n;
+        }
+        if (mIconPath.equals("13d")) {
+            return R.drawable.ic_13d;
+        }
+        if (mIconPath.equals("13n")) {
+            return R.drawable.ic_13n;
+        }
+        if (mIconPath.equals("50d")) {
+            return R.drawable.ic_50d;
+        }
+        if (mIconPath.equals("50n")) {
+            return R.drawable.ic_50n;
+        }
+        return 0;
     }
 
     public int getmTemp() {
@@ -180,10 +245,6 @@ public class Weather {
 
     public void setmCloud(int mCloud) {
         this.mCloud = mCloud;
-    }
-
-    public void iconData(byte[] icon) {
-        mIcon = icon;
     }
 
     public void setmSunrise(int mSunrise) {

@@ -9,6 +9,7 @@
     <dimen name="margins_fragment_today_content">16dp</dimen>
     <dimen name="spacings_fragment_today_content">20dp</dimen>
     <dimen name="margins_forecast_list_items">10dp</dimen>
+    <dimen name="height_forecast_list_icon">70dp</dimen>
     <dimen name="margins_drawer_item">12dp</dimen>
     <dimen name="spacings_drawer_item">12dp</dimen>
     <dimen name="height_image_drawer_item">32dp</dimen>

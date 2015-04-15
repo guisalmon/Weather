@@ -2,8 +2,6 @@ package android.weather.rob.org.weather.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +57,7 @@ public class ForecastListAdapter extends ArrayAdapter<Forecast> {
         }
 
         Forecast forecast = mForecasts.get(position);
-        holder.image.setImageBitmap(forecast.getWeather().getIcon());
+        holder.image.setImageResource(forecast.getWeather().getIconRes());
         holder.temp.setText("" + forecast.getmDayTemp() + mTempUnit);
         holder.desc.setText(forecast.getWeather().getmDesc());
         holder.day.setText(getDay(forecast.getWeather().getDay()));

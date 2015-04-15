@@ -11,22 +11,25 @@
         android:id="@+id/todayWeatherIcon"
         android:layout_gravity="center_horizontal|top"
         android:background="@drawable/overlay_weather_status_today"
-        android:layout_margin="@dimen/margins_fragment_today_content"/>
+        android:layout_margin="@dimen/margins_fragment_today_content"
+        android:padding="@dimen/margins_fragment_today_content"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/todayLocation"
         android:layout_gravity="center"
-        android:text="Location, Country"
+        android:gravity="center"
+        android:text=" , "
         android:layout_marginTop="@dimen/margins_fragment_today_content"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TEMP | Weather"
+        android:text=" | "
         android:id="@+id/todayWeatherDescription"
         android:layout_gravity="center"
+        android:gravity="center"
         android:textSize="35dp"
         android:textStyle="bold"
         android:layout_marginBottom="@dimen/margins_fragment_today_content"/>
@@ -62,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherHumidity"
-                android:text="57 %"
+                android:text=" %"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -82,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherPrecipitations"
-                android:text="0.0 mm"
+                android:text=" mm"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -102,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherPressure"
-                android:text="1016 hPa"
+                android:text=" hPa"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -130,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherWindSpeed"
-                android:text="20km/h"
+                android:text="km/h"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -150,7 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherDirection"
-                android:text="SE"
+                android:text=""
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>

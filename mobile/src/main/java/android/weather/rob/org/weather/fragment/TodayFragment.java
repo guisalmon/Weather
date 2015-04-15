@@ -75,7 +75,8 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
         ((TextView) getActivity().findViewById(R.id.todayWeatherPressure)).setText(weather.getmPressure() + " hPa");
         ((TextView) getActivity().findViewById(R.id.todayWeatherWindSpeed)).setText(weather.getmWindSpeed() + " " + mUnits[2]);
         ((TextView) getActivity().findViewById(R.id.todayWeatherDirection)).setText(weather.getWindDirection());
-        ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageBitmap(weather.getIcon());
+        ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(weather.getIconRes());
+
     }
 
     @Override
@@ -168,6 +169,66 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
         if (mRootView == null) return;
         Log.d(getClass().getName(), "Fragment.onGeolocationFail()");
     }
+
+    /*
+    public void setIconfromPath(String iconPath){
+        Log.d(getClass().getName(), "."+iconPath+"."+iconPath.equals("O1n"));
+        if (iconPath.equals("01d")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_01d);
+        }
+        if (iconPath.equals("01n")){
+            Log.d(getClass().getName(), "Fuck this shit");
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_01n);
+        }
+        if (iconPath.equals("02d")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_02d);
+        }
+        if (iconPath.equals("02n")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_02n);
+        }
+        if (iconPath.equals("03d")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_03d);
+        }
+        if (iconPath.equals("03n")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_03n);
+        }
+        if (iconPath.equals("04d")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_04d);
+        }
+        if (iconPath.equals("04n")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_04n);
+        }
+        if (iconPath.equals("09d")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_09d);
+        }
+        if (iconPath.equals("09n")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_09n);
+        }
+        if (iconPath.equals("10d")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_10d);
+        }
+        if (iconPath.equals("10n")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_10n);
+        }
+        if (iconPath.equals("11d")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_11d);
+        }
+        if (iconPath.equals("11n")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_11n);
+        }
+        if (iconPath.equals("13d")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_13d);
+        }
+        if (iconPath.equals("13n")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_13n);
+        }
+        if (iconPath.equals("50d")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_50d);
+        }
+        if (iconPath.equals("50n")){
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(R.drawable.ic_50n);
+        }
+    }*/
 
     /**
      * This interface must be implemented by activities that contain this

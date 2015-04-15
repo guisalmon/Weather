@@ -64,6 +64,11 @@ public class WeatherHttpClient {
 
     }
 
+    /**
+     * Returns a weather icon downloaded from the openweathermap api using the weather code
+     * @param code corresponding to the weather
+     * @return a Bitmap containing the downloaded icon
+     */
     public Bitmap getImage(String code) {
         HttpURLConnection con = null;
         InputStream is = null;
