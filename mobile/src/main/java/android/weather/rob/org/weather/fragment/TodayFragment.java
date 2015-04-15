@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 //import android.util.Log;
 
 /**
@@ -65,8 +67,8 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
 
     @Override
     public void onCurrentWeatherTaskCompleted(Weather weather) {
-        Log.d(getClass().getName(), weather.toString());
-        ((TextView) getActivity().findViewById(R.id.todayLocation)).setText(weather.getmCity() + ", " + weather.getmCountry());
+        Locale country = new Locale("", weather.getmCountry());
+        ((TextView) getActivity().findViewById(R.id.todayLocation)).setText(weather.getmCity() + ", " + country.getDisplayCountry());
         ((TextView) getActivity().findViewById(R.id.todayWeatherDescription)).setText(weather.getmTemp() + mUnits[0] + " | " + weather.getmCondition());
         ((TextView) getActivity().findViewById(R.id.todayWeatherHumidity)).setText(weather.getmHumidity() + "%");
         ((TextView) getActivity().findViewById(R.id.todayWeatherPrecipitations)).setText(weather.getmPrecipitations() + " " + mUnits[1]);
