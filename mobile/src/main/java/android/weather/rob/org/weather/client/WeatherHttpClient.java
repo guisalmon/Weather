@@ -16,9 +16,9 @@ import java.net.URL;
  */
 public class WeatherHttpClient {
 
-    private static String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?";
-    private static String IMG_URL = "http://openweathermap.org/img/w/";
-    private static String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
+    private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?";
+    private static final String IMG_URL = "http://openweathermap.org/img/w/";
+    private static final String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
 
     protected String getWeatherData(String location, WeatherRequest requestType) {
         HttpURLConnection con = null;
@@ -69,7 +69,7 @@ public class WeatherHttpClient {
      * @param code corresponding to the weather
      * @return a Bitmap containing the downloaded icon
      */
-    public Bitmap getImage(String code) {
+    protected Bitmap getImage(String code) {
         HttpURLConnection con = null;
         InputStream is = null;
         try {
@@ -82,9 +82,8 @@ public class WeatherHttpClient {
 
             // Let's read the response
             is = con.getInputStream();
-            Bitmap b = BitmapFactory.decodeStream(is);
 
-            return b;
+            return BitmapFactory.decodeStream(is);
         } catch (Throwable t) {
             t.printStackTrace();
         } finally {

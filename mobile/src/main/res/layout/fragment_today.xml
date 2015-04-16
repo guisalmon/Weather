@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/todayWeatherIcon"
         android:layout_gravity="center_horizontal|top"
+        android:contentDescription="@string/today_icon_desc"
         android:background="@drawable/overlay_weather_status_today"
         android:layout_margin="@dimen/margins_fragment_today_content"
         android:padding="@dimen/margins_fragment_today_content"/>
@@ -20,17 +21,17 @@
         android:id="@+id/todayLocation"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text=" , "
+        android:text="@string/today_location_placeholder"
         android:layout_marginTop="@dimen/margins_fragment_today_content"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" | "
+        android:text="@string/today_description_placeholder"
         android:id="@+id/todayWeatherDescription"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="35dp"
+        android:textSize="35sp"
         android:textStyle="bold"
         android:layout_marginBottom="@dimen/margins_fragment_today_content"/>
 
@@ -59,13 +60,14 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/today_humidity_desc"
                 android:src="@drawable/ic_weather_humidity"
                 android:layout_gravity="center"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherHumidity"
-                android:text=" %"
+                android:text="@string/today_humidity_placeholder"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -79,13 +81,14 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/today_precipitation_desc"
                 android:src="@drawable/ic_weather_precipitation"
                 android:layout_gravity="center"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherPrecipitations"
-                android:text=" mm"
+                android:text="@string/today_precipitation_placeholder"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -99,13 +102,14 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/today_pressure_placeholder"
                 android:src="@drawable/ic_weather_pressure"
                 android:layout_gravity="center_horizontal"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherPressure"
-                android:text=" hPa"
+                android:text="@string/today_pressure_placeholder"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -127,13 +131,14 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/today_wind_speed_desc"
                 android:src="@drawable/ic_weather_wind_speed"
                 android:layout_gravity="center_horizontal"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherWindSpeed"
-                android:text="km/h"
+                android:text="@string/today_windspeed_placeholder"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -147,13 +152,13 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/today_wind_direction_desc"
                 android:src="@drawable/ic_weather_direction"
                 android:layout_gravity="center_horizontal"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/todayWeatherDirection"
-                android:text=""
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>

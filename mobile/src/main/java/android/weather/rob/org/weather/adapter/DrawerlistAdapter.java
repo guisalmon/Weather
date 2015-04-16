@@ -15,18 +15,14 @@ import android.widget.TextView;
  * Created by guillaume on 14-04-15.
  */
 public class DrawerlistAdapter extends ArrayAdapter<DrawerItem> {
-    private Context mContext;
-    private DrawerItem[] mItems;
+    private final Context mContext;
+    private final DrawerItem[] mItems;
     private int mSelectedItem;
 
-    public DrawerlistAdapter(Context context, int resource, DrawerItem[] objects) {
-        super(context, resource, objects);
+    public DrawerlistAdapter(Context context, DrawerItem[] objects) {
+        super(context, R.layout.drawer_list_item, objects);
         this.mContext = context;
         this.mItems = objects;
-    }
-
-    public int getmSelectedItem() {
-        return mSelectedItem;
     }
 
     public void setmSelectedItem(int mSelectedItem) {

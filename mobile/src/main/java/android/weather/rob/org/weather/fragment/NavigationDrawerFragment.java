@@ -101,7 +101,6 @@ public class NavigationDrawerFragment extends Fragment {
         });
         mAdapter = new DrawerlistAdapter(
                 getActionBar().getThemedContext(),
-                R.layout.drawer_list_item,
                 new DrawerItem[]{
                         new DrawerItem(R.drawable.ic_drawer_today_dark, getString(R.string.today_section)),
                         new DrawerItem(R.drawable.ic_drawer_forecast_dark, getString(R.string.forecast_section))

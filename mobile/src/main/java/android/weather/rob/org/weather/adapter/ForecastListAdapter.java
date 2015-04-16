@@ -18,17 +18,16 @@ import java.util.List;
  * Created by guillaume on 12-04-15.
  */
 public class ForecastListAdapter extends ArrayAdapter<Forecast> {
-    private Context mContext;
-    private int mLayoutResourceId;
+    private final Context mContext;
+    private final int mLayoutResourceId;
     private List<Forecast> mForecasts = null;
-    private ForecastHolder holder = null;
     private String mTempUnit;
 
 
-    public ForecastListAdapter(Context context, int resource, List<Forecast> forecasts, Weather.format format) {
-        super(context, resource, forecasts);
+    public ForecastListAdapter(Context context, List<Forecast> forecasts, Weather.format format) {
+        super(context, R.layout.forecast_list_item, forecasts);
         mContext = context;
-        mLayoutResourceId = resource;
+        mLayoutResourceId = R.layout.forecast_list_item;
         mForecasts = forecasts;
         if (format == Weather.format.METRIC) {
             mTempUnit = "°C";
@@ -40,6 +39,7 @@ public class ForecastListAdapter extends ArrayAdapter<Forecast> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
+        ForecastHolder holder = null;
 
         if (row == null) {
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();

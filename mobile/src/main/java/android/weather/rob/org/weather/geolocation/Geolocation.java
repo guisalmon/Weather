@@ -19,10 +19,10 @@ public class Geolocation implements LocationListener {
     private static final int LOCATION_AGE = 60000 * 30; // milliseconds
     private static final int LOCATION_TIMEOUT = 30000; // milliseconds
 
-    private WeakReference<GeolocationListener> mListener;
+    private final WeakReference<GeolocationListener> mListener;
     private LocationManager mLocationManager;
     private Location mCurrentLocation;
-    private Timer mTimer;
+    private final Timer mTimer;
 
 
     public Geolocation(LocationManager locationManager, GeolocationListener listener) {

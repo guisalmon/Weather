@@ -2,8 +2,8 @@ package android.weather.rob.org.weather.activity;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.weather.rob.org.weather.R;
 
@@ -22,6 +22,11 @@ public class WeatherPreferenceActivity extends ActionBarActivity {
                 .commit();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
     public static class SettingsFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -29,13 +34,6 @@ public class WeatherPreferenceActivity extends ActionBarActivity {
 
             addPreferencesFromResource(R.xml.preferences);
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-
-        return true;
     }
 
 }

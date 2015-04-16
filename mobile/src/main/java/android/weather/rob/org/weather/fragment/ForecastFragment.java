@@ -8,18 +8,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
-import android.view.View;
 import android.weather.rob.org.weather.R;
 import android.weather.rob.org.weather.activity.WeatherActivity;
 import android.weather.rob.org.weather.adapter.ForecastListAdapter;
 import android.weather.rob.org.weather.client.WeatherJSONParser;
-import android.weather.rob.org.weather.fragment.dummy.DummyContent;
 import android.weather.rob.org.weather.geolocation.Geolocation;
 import android.weather.rob.org.weather.geolocation.GeolocationListener;
 import android.weather.rob.org.weather.listener.OnForecastDownloadComplete;
 import android.weather.rob.org.weather.utility.Forecast;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -33,9 +29,9 @@ import java.util.ArrayList;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class ForecastFragment extends ListFragment implements AbsListView.OnItemClickListener, OnForecastDownloadComplete, GeolocationListener {
+public class ForecastFragment extends ListFragment implements OnForecastDownloadComplete, GeolocationListener {
 
-    private Location mCurrentLocation = null;
+    private final Location mCurrentLocation = null;
     private Geolocation mGeolocation = null;
     private WeatherJSONParser mWeatherUpdater = null;
     private ArrayList<Forecast> mForecast;
@@ -83,17 +79,12 @@ public class ForecastFragment extends ListFragment implements AbsListView.OnItem
             }
             mForecast = forecast;
             if (getListView() != null) {
-                mAdapter = new ForecastListAdapter(getActivity(), R.layout.forecast_list_item, mForecast, (((WeatherActivity) getActivity()).unitFormat));
+                mAdapter = new ForecastListAdapter(getActivity(), mForecast, (((WeatherActivity) getActivity()).unitFormat));
                 setListAdapter(mAdapter);
             } else {
                 Log.w(getClass().getName(), "ListView is null");
             }
         }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -108,7 +99,7 @@ public class ForecastFragment extends ListFragment implements AbsListView.OnItem
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAdapter = new ForecastListAdapter(getActivity(), R.layout.forecast_list_item, mForecast, (((WeatherActivity) getActivity()).unitFormat));
+        mAdapter = new ForecastListAdapter(getActivity(), mForecast, (((WeatherActivity) getActivity()).unitFormat));
     }
 
     @Override
@@ -133,16 +124,6 @@ public class ForecastFragment extends ListFragment implements AbsListView.OnItem
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }
     }
 
     /**

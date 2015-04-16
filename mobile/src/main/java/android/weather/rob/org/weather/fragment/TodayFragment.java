@@ -37,7 +37,7 @@ import java.util.Locale;
  */
 public class TodayFragment extends Fragment implements GeolocationListener, OnWeatherDownloadComplete {
 
-    private Location mCurrentLocation = null;
+    private final Location mCurrentLocation = null;
     private Geolocation mGeolocation = null;
     private WeatherJSONParser mWeatherUpdater = null;
     private Weather mWeather = null;
@@ -82,20 +82,6 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
     @Override
     public void onCurrentWeatherTaskFailed() {
         Toast.makeText(getActivity(), "Downloading of the current weather data failed, check your internet connection", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        // start geolocation
-
-        super.onActivityCreated(savedInstanceState);
-
     }
 
     @Override
@@ -241,7 +227,6 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
 
