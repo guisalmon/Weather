@@ -56,7 +56,7 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
 
     @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
-        WeatherJSONParser.UpdateForecastDataByLocation(location, this, ((WeatherActivity) getActivity()).unitFormat);
+        WeatherJSONParser.UpdateForecastDataByLocation(location, this, ((WeatherActivity) getActivity()).unitFormat, ((WeatherActivity) getActivity()).numberOfForecasts);
     }
 
     @Override

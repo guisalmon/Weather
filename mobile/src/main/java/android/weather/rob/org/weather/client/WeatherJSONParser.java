@@ -27,12 +27,12 @@ public class WeatherJSONParser {
      * @param listener to call when the data retrieval is done
      * @param format   can be Weather.format.METRIC or Weather.format.IMPERIAL
      */
-    public static void UpdateForecastDataByLocation(Location location, OnForecastDownloadComplete listener, Weather.format format) {
+    public static void UpdateForecastDataByLocation(Location location, OnForecastDownloadComplete listener, Weather.format format, int numberOfDays) {
         //Formatting the request suffix
         if (format == Weather.format.IMPERIAL) {
-            mSuffix = "lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&units=imperial&cnt=5";
+            mSuffix = "lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&units=imperial&cnt=" + numberOfDays;
         } else {
-            mSuffix = "lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&units=metric&cnt=5";
+            mSuffix = "lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&units=metric&cnt=" + numberOfDays;
         }
 
         //Launching the download task
@@ -71,7 +71,8 @@ public class WeatherJSONParser {
 
         JSONArray jArr = jObj.getJSONArray("list"); // Here we have the forecast for every day
 
-        for (int i = 0; i < jArr.length(); i++) {
+        //Skip the first object to start on the next day and not on the current one
+        for (int i = 1; i < jArr.length(); i++) {
             Forecast f = new Forecast();
             Weather w = new Weather();
 

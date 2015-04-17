@@ -8,6 +8,12 @@
         android:defaultValue="@string/preference_unit_default"
         android:entries="@array/listUnitSystemArray"
         android:entryValues="@array/listUnitSystemValues"/>
+    <EditTextPreference
+        android:inputType="number"
+        android:title="@string/preference_days_count_title"
+        android:summary="@string/preference_days_count_summary"
+        android:key="forecastLength"
+        android:defaultValue="7"/>
 
 
 </PreferenceScreen>

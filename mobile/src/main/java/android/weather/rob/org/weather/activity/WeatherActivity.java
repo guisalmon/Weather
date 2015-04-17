@@ -24,6 +24,7 @@ public class WeatherActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, ForecastFragment.OnFragmentInteractionListener, TodayFragment.OnFragmentInteractionListener {
 
     public Weather.format unitFormat = Weather.format.IMPERIAL;
+    public int numberOfForecasts = 7;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -57,6 +58,13 @@ public class WeatherActivity extends ActionBarActivity
             unitFormat = Weather.format.METRIC;
         } else {
             unitFormat = Weather.format.IMPERIAL;
+        }
+        String numberOfForecastsText = PreferenceManager.getDefaultSharedPreferences(this).getString("forecastLength", "7");
+        numberOfForecasts = Integer.parseInt(numberOfForecastsText);
+        if (numberOfForecasts > 15) {
+            numberOfForecasts = 16;
+        } else {
+            numberOfForecasts += 1;
         }
     }
 
