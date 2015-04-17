@@ -13,21 +13,21 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by guillaume on 11-04-15.
+ * Geolocation handles all the location updates from the providers.
  */
 public class Geolocation implements LocationListener {
     private static final int LOCATION_AGE = 60000 * 30; // milliseconds
     private static final int LOCATION_TIMEOUT = 30000; // milliseconds
 
     private final WeakReference<GeolocationListener> mListener;
+    private final Timer mTimer;
     private LocationManager mLocationManager;
     private Location mCurrentLocation;
-    private final Timer mTimer;
 
 
     public Geolocation(LocationManager locationManager, GeolocationListener listener) {
-        mLocationManager = locationManager; // (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-        mListener = new WeakReference<GeolocationListener>(listener);
+        mLocationManager = locationManager;
+        mListener = new WeakReference<>(listener);
         mTimer = new Timer();
         init();
     }
@@ -71,9 +71,12 @@ public class Geolocation implements LocationListener {
     }
 
 
+    /**
+     * Stop all location updates
+     */
     public void stop() {
         Log.v(getClass().getName(), "Geolocation.stop()");
-        if (mTimer != null) mTimer.cancel();
+        mTimer.cancel();
         if (mLocationManager != null) {
             mLocationManager.removeUpdates(this);
             mLocationManager = null;
@@ -97,7 +100,7 @@ public class Geolocation implements LocationListener {
         mCurrentLocation = new Location(location);
         stop();
         GeolocationListener listener = mListener.get();
-        if (listener != null && location != null)
+        if (listener != null)
             listener.onGeolocationRespond(Geolocation.this, mCurrentLocation);
     }
 

@@ -21,7 +21,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 /**
- * A fragment representing a list of Items.
+ * Fragment displaying the list of weather forecasts for the next days
  * <p/>
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
@@ -49,13 +49,6 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
     public ForecastFragment() {
     }
 
-    public static ForecastFragment newInstance(String param1, String param2) {
-        ForecastFragment fragment = new ForecastFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onForecastTaskFailed() {
         Toast.makeText(getActivity(), R.string.error_forecast_download, Toast.LENGTH_SHORT).show();
@@ -63,7 +56,7 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
 
     @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
-        mWeatherUpdater.UpdateForecastDataByLocation(location, this, ((WeatherActivity) getActivity()).unitFormat);
+        WeatherJSONParser.UpdateForecastDataByLocation(location, this, ((WeatherActivity) getActivity()).unitFormat);
     }
 
     @Override

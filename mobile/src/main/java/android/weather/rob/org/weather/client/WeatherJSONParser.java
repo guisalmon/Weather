@@ -2,7 +2,6 @@ package android.weather.rob.org.weather.client;
 
 import android.location.Location;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.weather.rob.org.weather.listener.OnForecastDownloadComplete;
 import android.weather.rob.org.weather.listener.OnWeatherDownloadComplete;
 import android.weather.rob.org.weather.utility.Forecast;
@@ -15,7 +14,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Created by guillaume on 11-04-15.
+ * WeatherJSONParser handles the parsing of the JSON data from the server
  */
 public class WeatherJSONParser {
 
@@ -61,7 +60,7 @@ public class WeatherJSONParser {
     }
 
     private static ArrayList<Forecast> getForecastWeather(String data) throws JSONException {
-        JSONObject jObj = null;
+        JSONObject jObj;
         ArrayList<Forecast> forecasts = new ArrayList<>();
 
         jObj = new JSONObject(data);
@@ -76,12 +75,12 @@ public class WeatherJSONParser {
             Forecast f = new Forecast();
             Weather w = new Weather();
 
-            w.setmCountry(country);
-            w.setmCity(city);
+            w.setCountry(country);
+            w.setCity(city);
 
             JSONObject jDayForecast = jArr.getJSONObject(i);
 
-            w.setmDate(jDayForecast.getLong("dt"));
+            w.setDate(jDayForecast.getLong("dt"));
 
             JSONObject jTempObj = jDayForecast.getJSONObject("temp");
 
@@ -92,16 +91,16 @@ public class WeatherJSONParser {
             f.setmEveTemp((float) jTempObj.getDouble("eve"));
             f.setmMorningTemp((float) jTempObj.getDouble("morn"));
 
-            w.setmHumidity((int) jDayForecast.getDouble("humidity"));
-            w.setmPressure((int) jDayForecast.getDouble("pressure"));
+            w.setHumidity((int) jDayForecast.getDouble("humidity"));
+            w.setPressure((int) jDayForecast.getDouble("pressure"));
 
             JSONArray jWeatherArr = jDayForecast.getJSONArray("weather");
             JSONObject jWeatherObj = jWeatherArr.getJSONObject(0);
 
-            w.setmId(getInt("id", jWeatherObj));
-            w.setmDesc(getString("description", jWeatherObj));
-            w.setmCondition(getString("main", jWeatherObj));
-            w.setmIconPath(getString("icon", jWeatherObj));
+            w.setId(getInt("id", jWeatherObj));
+            w.setDesc(getString("description", jWeatherObj));
+            w.setCondition(getString("main", jWeatherObj));
+            w.setIconPath(getString("icon", jWeatherObj));
 
             f.setWeather(w);
             forecasts.add(f);
@@ -111,45 +110,45 @@ public class WeatherJSONParser {
 
     private static Weather getCurrentWeather(String data) throws JSONException {
         Weather weather = new Weather();
-        JSONObject jObj = null;
+        JSONObject jObj;
 
         jObj = new JSONObject(data);
 
         JSONObject sysObj = getObject("sys", jObj);
-        weather.setmCity(getString("name", jObj));
-        weather.setmCountry(getString("country", sysObj));
-        weather.setmSunrise(getInt("sunrise", sysObj));
-        weather.setmSunset(getInt("sunset", sysObj));
+        weather.setCity(getString("name", jObj));
+        weather.setCountry(getString("country", sysObj));
+        weather.setSunrise(getInt("sunrise", sysObj));
+        weather.setSunset(getInt("sunset", sysObj));
 
         JSONArray jArr = jObj.getJSONArray("weather");
 
         JSONObject JSONWeather = jArr.getJSONObject(0);
-        weather.setmId(getInt("id", JSONWeather));
-        weather.setmDesc(getString("description", JSONWeather));
-        weather.setmCondition(getString("main", JSONWeather));
-        weather.setmIconPath(getString("icon", JSONWeather));
+        weather.setId(getInt("id", JSONWeather));
+        weather.setDesc(getString("description", JSONWeather));
+        weather.setCondition(getString("main", JSONWeather));
+        weather.setIconPath(getString("icon", JSONWeather));
 
         JSONObject mainObj = getObject("main", jObj);
-        weather.setmHumidity(getInt("humidity", mainObj));
-        weather.setmPressure(getInt("pressure", mainObj));
-        weather.setmTempMax(getFloat("temp_max", mainObj));
-        weather.setmTempMin(getFloat("temp_min", mainObj));
-        weather.setmTemp(getInt("temp", mainObj));
+        weather.setHumidity(getInt("humidity", mainObj));
+        weather.setPressure(getInt("pressure", mainObj));
+        weather.setTempMax(getFloat("temp_max", mainObj));
+        weather.setTempMin(getFloat("temp_min", mainObj));
+        weather.setTemp(getInt("temp", mainObj));
 
         JSONObject wObj = getObject("wind", jObj);
-        weather.setmWindSpeed(getFloat("speed", wObj));
-        weather.setmWindDeg(getFloat("deg", wObj));
+        weather.setWindSpeed(getFloat("speed", wObj));
+        weather.setWindDeg(getFloat("deg", wObj));
 
         JSONObject cObj = getObject("clouds", jObj);
-        weather.setmCloud(getInt("all", cObj));
+        weather.setCloud(getInt("all", cObj));
 
         // When no rainfall has been recorded, instead of sending 0mm as a value the api doesn't
         // send any rain JSON object, the try catch block is a fix for this case.
         try {
             JSONObject rObj = getObject("rain", jObj);
-            weather.setmPrecipitations(getFloat("3h", rObj));
+            weather.setPrecipitations(getFloat("3h", rObj));
         } catch (JSONException e) {
-            weather.setmPrecipitations(0);
+            weather.setPrecipitations(0);
         }
 
         return weather;
@@ -176,7 +175,7 @@ public class WeatherJSONParser {
 
         @Override
         protected ArrayList<Forecast> doInBackground(OnForecastDownloadComplete... params) {
-            ArrayList<Forecast> forecast = new ArrayList<Forecast>();
+            ArrayList<Forecast> forecast = new ArrayList<>();
             listener = params[0];
             String data = ((new WeatherHttpClient()).getWeatherData(mSuffix, WeatherHttpClient.WeatherRequest.FORECAST));
 
@@ -189,12 +188,15 @@ public class WeatherJSONParser {
                 }
             }
 
-            // Let's retrieve the icon
+            /*
+            // If you want to retrieve the weather icon from the openweathermap api, uncomment this code.
+
             if (forecast != null) {
                 for (Forecast f : forecast) {
-                    f.getWeather().setmImage((new WeatherHttpClient()).getImage(f.getWeather().getmIconPath()));
+                    f.getWeather().setImage((new WeatherHttpClient()).getImage(f.getWeather().getIconPath()));
                 }
             }
+            */
 
             return forecast;
         }
@@ -223,14 +225,14 @@ public class WeatherJSONParser {
                 try {
                     weather = getCurrentWeather(data);
                     // Let's retrieve the icon
-                    weather.setmImage((new WeatherHttpClient()).getImage(weather.getmIconPath()));
+                    weather.setImage((new WeatherHttpClient()).getImage(weather.getIconPath()));
                 } catch (JSONException e) {
                     e.printStackTrace();
                     return null;
                 }
             }
 
-            weather.setmDateToCurrentTime();
+            weather.setDateToCurrentTime();
 
             return weather;
         }

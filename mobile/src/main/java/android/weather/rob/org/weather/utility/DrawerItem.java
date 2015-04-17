@@ -1,11 +1,10 @@
 package android.weather.rob.org.weather.utility;
 
-import android.graphics.Bitmap;
-
 /**
- * Created by guillaume on 14-04-15.
+ * Convenience class containing the icon resource and the title for an element in the navigation
+ * drawer.
  */
-public class DrawerItem{
+public class DrawerItem {
     public final int icon;
     public final String title;
 

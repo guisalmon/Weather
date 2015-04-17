@@ -5,14 +5,13 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by guillaume on 11-04-15.
+ * WeatherHttpClient is handling downloading of the current weather and of weather forecast.
  */
 public class WeatherHttpClient {
 
@@ -20,6 +19,14 @@ public class WeatherHttpClient {
     private static final String IMG_URL = "http://openweathermap.org/img/w/";
     private static final String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
 
+    /**
+     * Downloads the current or forecast weather for a given location and returns the raw result as
+     * a String. Returns null if the download failed.
+     *
+     * @param location    as String with the following format "lat=XX&lon=XX".
+     * @param requestType specifying if it should return the weather forecast or the current weather
+     * @return a String containing the JSON answer from the server or null if something went wrong
+     */
     protected String getWeatherData(String location, WeatherRequest requestType) {
         HttpURLConnection con = null;
         InputStream is = null;
@@ -37,12 +44,14 @@ public class WeatherHttpClient {
             con.connect();
 
             // Let's read the response
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             is = con.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String line = null;
-            while ((line = br.readLine()) != null)
-                buffer.append(line + "\r\n");
+            String line;
+            while ((line = br.readLine()) != null) {
+                buffer.append(line);
+                buffer.append("\r\n");
+            }
 
             is.close();
             con.disconnect();
@@ -53,10 +62,12 @@ public class WeatherHttpClient {
             try {
                 is.close();
             } catch (Throwable t) {
+                Log.d(getClass().getName(), "Did not manage to close the incoming stream while downloading weather");
             }
             try {
                 con.disconnect();
             } catch (Throwable t) {
+                Log.d(getClass().getName(), "Did not manage to disconnect from the API while downloading weather");
             }
         }
 
@@ -66,6 +77,7 @@ public class WeatherHttpClient {
 
     /**
      * Returns a weather icon downloaded from the openweathermap api using the weather code
+     *
      * @param code corresponding to the weather
      * @return a Bitmap containing the downloaded icon
      */
@@ -73,7 +85,7 @@ public class WeatherHttpClient {
         HttpURLConnection con = null;
         InputStream is = null;
         try {
-            con = (HttpURLConnection) (new URL(IMG_URL + code +".png")).openConnection();
+            con = (HttpURLConnection) (new URL(IMG_URL + code + ".png")).openConnection();
             Log.d(getClass().getName(), con.toString());
             con.setRequestMethod("GET");
             con.setDoInput(true);
@@ -90,10 +102,12 @@ public class WeatherHttpClient {
             try {
                 is.close();
             } catch (Throwable t) {
+                Log.d(getClass().getName(), "Did not manage to close the incoming stream while downloading the icon");
             }
             try {
                 con.disconnect();
             } catch (Throwable t) {
+                Log.d(getClass().getName(), "Did not manage to disconnect from the API while downloading the icon");
             }
         }
 

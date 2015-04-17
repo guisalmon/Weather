@@ -8,10 +8,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * Created by guillaume on 11-04-15.
+ * Weather contains all the data downloaded from the API concerning the weather on a specific day
  */
 public class Weather {
-    private byte[] mIcon;
     private Bitmap mImage;
     private String mCity;
     private String mCountry;
@@ -32,78 +31,83 @@ public class Weather {
     private Date mDate;
     private float mPrecipitations;
 
-    public void setmDate(long timestamp) {
+    public void setDate(long timestamp) {
         this.mDate = new Date(timestamp * 1000);
     }
 
-    public void setmDateToCurrentTime() {
-        mDate = new Date();
+    public void setDateToCurrentTime() {
+        this.mDate = new Date();
     }
 
-    public String getmIconPath() {
+    public String getIconPath() {
         return mIconPath;
     }
 
-    public void setmIconPath(String mIconPath) {
+    public void setIconPath(String mIconPath) {
         this.mIconPath = mIconPath;
     }
 
-    public String getmCity() {
+    public String getCity() {
         return mCity;
     }
 
-    public void setmCity(String mCity) {
+    public void setCity(String mCity) {
         this.mCity = mCity;
     }
 
-    public String getmCountry() {
+    public String getCountry() {
         return mCountry;
     }
 
-    public void setmCountry(String mCountry) {
+    public void setCountry(String mCountry) {
         this.mCountry = mCountry;
     }
 
-    public String getmCondition() {
+    public String getCondition() {
         return mCondition;
     }
 
-    public void setmCondition(String mCondition) {
+    public void setCondition(String mCondition) {
         this.mCondition = mCondition;
     }
 
-    public int getmHumidity() {
+    public int getHumidity() {
         return mHumidity;
     }
 
-    public void setmHumidity(int mHumidity) {
+    public void setHumidity(int mHumidity) {
         this.mHumidity = mHumidity;
     }
 
-    public int getmPressure() {
+    public int getPressure() {
         return mPressure;
     }
 
-    public void setmPressure(int mPressure) {
+    public void setPressure(int mPressure) {
         this.mPressure = mPressure;
     }
 
-    public float getmWindSpeed() {
+    public float getWindSpeed() {
         return mWindSpeed;
     }
 
-    public void setmWindSpeed(float mWindSpeed) {
+    public void setWindSpeed(float mWindSpeed) {
         this.mWindSpeed = mWindSpeed;
     }
 
-    public String getmDesc() {
+    public String getDesc() {
         return mDesc;
     }
 
-    public void setmDesc(String mDesc) {
+    public void setDesc(String mDesc) {
         this.mDesc = mDesc;
     }
 
+    /**
+     * Gets the day of the week corresponding to the date of this weather
+     *
+     * @return the day of the week as an element of the day enum structure
+     */
     public day getDay() {
         Calendar cal = new GregorianCalendar();
         cal.setTime(mDate);
@@ -126,6 +130,12 @@ public class Weather {
         return day.NONE;
     }
 
+    /**
+     * Returns the icon for the current weather as a bitmap
+     *
+     * @return current weather icon Bitmap
+     * @deprecated getIconRes() should be used to directly get the icon resource suitable for the weather
+     */
     public Bitmap getIcon() {
         //Log.d(getClass().getName(), ""+mIcon.length);
         //return BitmapFactory.decodeByteArray(mIcon, 0, mIcon.length);
@@ -134,11 +144,12 @@ public class Weather {
 
     /**
      * Sets an icon for this weather
-     * @deprecated getIconRes() should be used to directly get the icon resource suitable for the weather
+     *
      * @param image to be set as a weather icon
+     * @deprecated getIconRes() should be used to directly get the icon resource suitable for the weather
      */
     @Deprecated
-    public void setmImage(Bitmap image) {
+    public void setImage(Bitmap image) {
         this.mImage = image;
     }
 
@@ -153,6 +164,11 @@ public class Weather {
         else return "NW";
     }
 
+    /**
+     * Gets the icon related to this weather from resources
+     *
+     * @return the icon's id.
+     */
     public int getIconRes() {
         if (mIconPath.equals("01d")) {
             return R.drawable.ic_01d;
@@ -211,47 +227,47 @@ public class Weather {
         return 0;
     }
 
-    public int getmTemp() {
+    public int getTemp() {
         return mTemp;
     }
 
-    public void setmTemp(int mTemp) {
+    public void setTemp(int mTemp) {
         this.mTemp = mTemp;
     }
 
-    public float getmPrecipitations() {
+    public float getPrecipitations() {
         return mPrecipitations;
     }
 
-    public void setmPrecipitations(float precipitations) {
+    public void setPrecipitations(float precipitations) {
         this.mPrecipitations = precipitations;
     }
 
-    public void setmId(int mId) {
+    public void setId(int mId) {
         this.mId = mId;
     }
 
-    public void setmTempMax(float mTempMax) {
+    public void setTempMax(float mTempMax) {
         this.mTempMax = mTempMax;
     }
 
-    public void setmTempMin(float mTempMin) {
+    public void setTempMin(float mTempMin) {
         this.mTempMin = mTempMin;
     }
 
-    public void setmWindDeg(float mWindDeg) {
+    public void setWindDeg(float mWindDeg) {
         this.mWindDeg = mWindDeg;
     }
 
-    public void setmCloud(int mCloud) {
+    public void setCloud(int mCloud) {
         this.mCloud = mCloud;
     }
 
-    public void setmSunrise(int mSunrise) {
+    public void setSunrise(int mSunrise) {
         this.mSunrise = mSunrise;
     }
 
-    public void setmSunset(int mSunset) {
+    public void setSunset(int mSunset) {
         this.mSunset = mSunset;
     }
 

@@ -15,13 +15,13 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Created by guillaume on 12-04-15.
+ * Adapter creating the rows displayed by ForecastFragment with the data from Forecast objects
  */
 public class ForecastListAdapter extends ArrayAdapter<Forecast> {
     private final Context mContext;
     private final int mLayoutResourceId;
+    private final String mTempUnit;
     private List<Forecast> mForecasts = null;
-    private String mTempUnit;
 
 
     public ForecastListAdapter(Context context, List<Forecast> forecasts, Weather.format format) {
@@ -39,7 +39,7 @@ public class ForecastListAdapter extends ArrayAdapter<Forecast> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        ForecastHolder holder = null;
+        ForecastHolder holder;
 
         if (row == null) {
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
@@ -59,13 +59,13 @@ public class ForecastListAdapter extends ArrayAdapter<Forecast> {
         Forecast forecast = mForecasts.get(position);
         holder.image.setImageResource(forecast.getWeather().getIconRes());
         holder.temp.setText("" + forecast.getmDayTemp() + mTempUnit);
-        holder.desc.setText(forecast.getWeather().getmDesc());
+        holder.desc.setText(forecast.getWeather().getDesc());
         holder.day.setText(getDay(forecast.getWeather().getDay()));
 
         return row;
     }
 
-    private String getDay (Weather.day d){
+    private String getDay(Weather.day d) {
         switch (d) {
             case MONDAY:
                 return mContext.getResources().getString(R.string.monday);

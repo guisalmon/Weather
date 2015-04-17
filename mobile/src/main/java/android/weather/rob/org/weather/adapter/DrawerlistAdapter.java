@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Created by guillaume on 14-04-15.
+ * Adapter creating items in the navigation drawer from DrawerItem objects
  */
 public class DrawerlistAdapter extends ArrayAdapter<DrawerItem> {
     private final Context mContext;

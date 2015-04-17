@@ -17,7 +17,9 @@ import android.weather.rob.org.weather.fragment.NavigationDrawerFragment;
 import android.weather.rob.org.weather.fragment.TodayFragment;
 import android.weather.rob.org.weather.utility.Weather;
 
-
+/**
+ * Main activity of the application
+ */
 public class WeatherActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, ForecastFragment.OnFragmentInteractionListener, TodayFragment.OnFragmentInteractionListener {
 
@@ -78,17 +80,6 @@ public class WeatherActivity extends ActionBarActivity
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .commit();
-    }
-
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.today_section);
-                break;
-            case 2:
-                mTitle = getString(R.string.forecast_section);
-                break;
-        }
     }
 
     private void restoreActionBar() {

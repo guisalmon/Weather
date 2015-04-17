@@ -1,7 +1,8 @@
 package android.weather.rob.org.weather.utility;
 
 /**
- * Created by guillaume on 12-04-15.
+ * Forecast contains all the data downloaded from the API concerning the weather forecast for the
+ * next days
  */
 public class Forecast {
     private Weather weather;

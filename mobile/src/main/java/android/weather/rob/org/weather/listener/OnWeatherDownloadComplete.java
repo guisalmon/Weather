@@ -3,10 +3,17 @@ package android.weather.rob.org.weather.listener;
 import android.weather.rob.org.weather.utility.Weather;
 
 /**
- * Created by guillaume on 11-04-15.
+ * Listener to register in the WeatherJSONParser and implement in the class which will use the weather data.
  */
 public interface OnWeatherDownloadComplete {
+    /**
+     * Called when a weather download is finished
+     * @param weather object containing the downloaded data
+     */
     void onCurrentWeatherTaskCompleted(Weather weather);
 
+    /**
+     * Called when a weather download failed
+     */
     void onCurrentWeatherTaskFailed();
 }

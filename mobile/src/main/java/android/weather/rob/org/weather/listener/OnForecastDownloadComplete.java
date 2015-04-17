@@ -5,10 +5,20 @@ import android.weather.rob.org.weather.utility.Forecast;
 import java.util.ArrayList;
 
 /**
- * Created by guillaume on 12-04-15.
+ * Listener to register in the WeatherJSONParser and implement in the class which will use the
+ * weather forecast data.
  */
 public interface OnForecastDownloadComplete {
+
+    /**
+     * Called when a weather forecast download is finished
+     *
+     * @param forecast object containing the downloaded weather forecast data
+     */
     void onForecastTaskCompleted(ArrayList<Forecast> forecast);
 
+    /**
+     * Called when a weather forecast download failed.
+     */
     void onForecastTaskFailed();
 }
