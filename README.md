@@ -33,10 +33,10 @@ Choosing the unit system and the amount of days the user wants a forecast for is
 Changelog
 =========
 
-1.0.0 Features:
-######  Current weather for the current location
-######  Weather forecast for up to 15 days for the current location
-######  Support of both the metric system and the imperial system
+##1.0.0 Features:
+Current weather for the current location
+Weather forecast for up to 15 days for the current location
+Support of both the metric system and the imperial system
 
 
 <a name="buildproject" />Building project
