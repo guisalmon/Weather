@@ -1,19 +1,26 @@
-Example
+Description
 =======
 
-*Fill in text about the app.*
+This is a simple weather forecast application. It gives you general informations about today's weather and a weather forecast for up to 15 days.
 
 
 Features
 ========
 
-*Fill in text about main features.*
+Today's weather:
+![alt tag]https://db.tt/gMG2kpaV)
+
+Forecast weather:
+![alt tag]https://db.tt/QrKI4cjO)
+
+Supports metric and the imperial unit systems:
+![alt tag]https://db.tt/UCVqMa6J)
 
 
 Installation
 ============
 
-*Fill in text about installation.*
+Refer to the [Building project](#buildproject) section.
 
 
 Usage
@@ -34,7 +41,7 @@ Changelog
 *Fill in text about version changes.*
 
 
-Building project
+<a name="buildproject" />Building project
 ================
 
 This chapter describes how to build APK with Gradle and prepare app for publishing.
