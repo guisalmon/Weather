@@ -33,7 +33,7 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
 
-    <string name="preference_unit_title">Units</string>
+    <string name="preference_unit_title">Unit system</string>
     <string name="preference_unit_summary">Select whether you what to use the metric system or the imperial one</string>
     <string name="preference_unit_default">1</string>
     <string name="preference_days_count_title">Number of days of forecast</string>
