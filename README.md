@@ -86,7 +86,7 @@ buildConfigField "boolean", "DEV_API", "false"
 Developed by
 ============
 
-[Guillaume Salmon](guisalmon.github.io)
+[Guillaume Salmon](https://guisalmon.github.io/)
 
 
 License
