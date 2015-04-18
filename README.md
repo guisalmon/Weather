@@ -79,7 +79,8 @@ There are also a build config fields in this script. Check "buildTypes" configur
 
 ```groovy
 buildConfigField "boolean", "LOGS", "false"
-buildConfigField "boolean", "DEV_API", "false"```
+buildConfigField "boolean", "DEV_API", "false"
+```
 
 
 Developed by
