@@ -11,6 +11,10 @@
     <string name="title_activity_weather_preference">Settings</string>
     <string name="drawer_forecast">Forecast</string>
     <string name="drawer_today">Today</string>
+    <string name="city_search_hint">Search city</string>
+    <string name="city_search_title">City</string>
+    <string name="location_search_title">Find location</string>
+
 
     <string name="today_location_placeholder"> , </string>
     <string name="today_description_placeholder"> | </string>
