@@ -69,6 +69,7 @@ public class TodayFragment extends Fragment implements OnWeatherDownloadListener
             mPlaceProvider.setCityInvalid();
         } else {
             Toast.makeText(getActivity(), R.string.error_weather_download, Toast.LENGTH_SHORT).show();
+            updateData(mPlaceProvider.getPlaceType(), mPlaceProvider);
         }
     }
 
@@ -129,10 +130,18 @@ public class TodayFragment extends Fragment implements OnWeatherDownloadListener
     public void updateData(PlaceProvider.PlaceType type, PlaceProvider provider) {
         switch (type) {
             case GEOLOCATION:
-                WeatherJSONParser.UpdateCurrentDataByLocation(provider.getLocation(), this, ((WeatherActivity) getActivity()).unitFormat);
+                if (provider.getLocation() != null) {
+                    WeatherJSONParser.UpdateCurrentDataByLocation(
+                            provider.getLocation(),
+                            this,
+                            ((WeatherActivity) getActivity()).unitFormat);
+                }
                 break;
             case CITY_NAME:
-                WeatherJSONParser.UpdateCurrentDataByCityName(provider.getCity(), this, ((WeatherActivity) getActivity()).unitFormat);
+                WeatherJSONParser.UpdateCurrentDataByCityName(
+                        provider.getCity(),
+                        this,
+                        ((WeatherActivity) getActivity()).unitFormat);
                 break;
         }
     }

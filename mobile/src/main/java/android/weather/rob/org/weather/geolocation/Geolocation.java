@@ -23,6 +23,7 @@ public class Geolocation implements LocationListener {
     private final Timer mTimer;
     private LocationManager mLocationManager;
     private Location mCurrentLocation;
+    private int providerCount = 2;
 
 
     public Geolocation(LocationManager locationManager, GeolocationListener listener) {
@@ -108,12 +109,18 @@ public class Geolocation implements LocationListener {
     @Override
     public void onProviderDisabled(String provider) {
         Log.v(getClass().getName(), "Geolocation.onProviderDisabled(): " + provider);
+        providerCount -= 1;
+        if (providerCount == 0) {
+            ((GeolocationListener) mListener.get()).onGeolocationFail(this);
+        }
+
     }
 
 
     @Override
     public void onProviderEnabled(String provider) {
         Log.v(getClass().getName(), "Geolocation.onProviderEnabled(): " + provider);
+        providerCount += 1;
     }
 
 

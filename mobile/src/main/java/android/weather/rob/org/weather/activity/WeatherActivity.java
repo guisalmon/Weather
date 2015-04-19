@@ -162,7 +162,6 @@ public class WeatherActivity extends ActionBarActivity
             case R.id.locationSearchItem:
                 mCityName = "";
                 mPlaceType = PlaceType.GEOLOCATION;
-                mPreviousPlaceType = PlaceType.GEOLOCATION;
                 mPlaceListener.updateData(mPlaceType, this);
         }
 
@@ -218,12 +217,28 @@ public class WeatherActivity extends ActionBarActivity
     @Override
     public void registerOnPlaceChangeListener(OnPlaceChangeListener listener) {
         mPlaceListener = listener;
-        listener.updateData(mPlaceType, this);
+        if(mCurrentLocation != null || mPlaceType == PlaceType.CITY_NAME) {
+            listener.updateData(mPlaceType, this);
+        }
     }
 
     @Override
     public void unregisterOnPlaceChangeListener() {
         mPlaceListener = null;
+    }
+
+    @Override
+    public void setGeolocInvalid() {
+        mPlaceType = mPreviousPlaceType;
+        if (mPlaceType == PlaceType.CITY_NAME) {
+            mCityName = mPreviousCityName;
+        }
+        mPlaceListener.updateData(mPlaceType, this);
+    }
+
+    @Override
+    public void setGeolocValid() {
+        mPreviousPlaceType = PlaceType.GEOLOCATION;
     }
 
     @Override
@@ -236,6 +251,6 @@ public class WeatherActivity extends ActionBarActivity
 
     @Override
     public void onGeolocationFail(Geolocation geolocation) {
-        Toast.makeText(this, R.string.error_location, Toast.LENGTH_SHORT).show();
+        setGeolocInvalid();
     }
 }

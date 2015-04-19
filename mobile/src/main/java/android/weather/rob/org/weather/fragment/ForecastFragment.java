@@ -51,6 +51,7 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
             mPlaceProvider.setCityInvalid();
         } else {
             Toast.makeText(getActivity(), R.string.error_forecast_download, Toast.LENGTH_SHORT).show();
+            updateData(mPlaceProvider.getPlaceType(), mPlaceProvider);
         }
     }
 
@@ -113,11 +114,13 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
     public void updateData(PlaceProvider.PlaceType type, PlaceProvider provider) {
         switch (type) {
             case GEOLOCATION:
-                WeatherJSONParser.UpdateForecastDataByLocation(
-                        provider.getLocation(),
-                        this,
-                        ((WeatherActivity) getActivity()).unitFormat,
-                        ((WeatherActivity) getActivity()).numberOfForecasts);
+                if (provider.getLocation() != null) {
+                    WeatherJSONParser.UpdateForecastDataByLocation(
+                            provider.getLocation(),
+                            this,
+                            ((WeatherActivity) getActivity()).unitFormat,
+                            ((WeatherActivity) getActivity()).numberOfForecasts);
+                }
                 break;
             case CITY_NAME:
                 WeatherJSONParser.UpdateForecastDataByCityName(
