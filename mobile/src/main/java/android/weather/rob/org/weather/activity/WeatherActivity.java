@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -160,6 +162,7 @@ public class WeatherActivity extends ActionBarActivity
             case R.id.locationSearchItem:
                 mCityName = "";
                 mPlaceType = PlaceType.GEOLOCATION;
+                mPreviousPlaceType = PlaceType.GEOLOCATION;
                 mPlaceListener.updateData(mPlaceType, this);
         }
 
