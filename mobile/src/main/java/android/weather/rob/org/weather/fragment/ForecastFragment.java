@@ -16,6 +16,7 @@ import android.weather.rob.org.weather.geolocation.Geolocation;
 import android.weather.rob.org.weather.geolocation.GeolocationListener;
 import android.weather.rob.org.weather.listener.OnForecastDownloadComplete;
 import android.weather.rob.org.weather.utility.Forecast;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,10 +32,10 @@ import java.util.ArrayList;
  */
 public class ForecastFragment extends ListFragment implements OnForecastDownloadComplete, GeolocationListener {
 
-    private final Location mCurrentLocation = null;
+    private Location mCurrentLocation = null;
     private Geolocation mGeolocation = null;
-    private WeatherJSONParser mWeatherUpdater = null;
     private ArrayList<Forecast> mForecast;
+    private ListView mListView;
     private OnFragmentInteractionListener mListener;
     /**
      * The Adapter which will be used to populate the ListView/GridView with
@@ -56,6 +57,7 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
 
     @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
+        mCurrentLocation = location;
         WeatherJSONParser.UpdateForecastDataByLocation(location, this, ((WeatherActivity) getActivity()).unitFormat, ((WeatherActivity) getActivity()).numberOfForecasts);
     }
 
@@ -65,18 +67,10 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
     }
 
     @Override
-    public void onForecastTaskCompleted(ArrayList<Forecast> forecast) {
-        if (forecast != null) {
-            for (Forecast f : forecast) {
-                Log.d(getClass().getName(), f.toString());
-            }
-            mForecast = forecast;
-            if (getListView() != null) {
-                mAdapter = new ForecastListAdapter(getActivity(), mForecast, (((WeatherActivity) getActivity()).unitFormat));
-                setListAdapter(mAdapter);
-            } else {
-                Log.w(getClass().getName(), "ListView is null");
-            }
+    public void onForecastTaskCompleted(ArrayList<Forecast> forecasts) {
+        if (forecasts != null) {
+            mForecast = forecasts;
+            refreshView();
         }
     }
 
@@ -84,15 +78,30 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
     public void onResume() {
         super.onResume();
         if (mCurrentLocation == null) {
-            mWeatherUpdater = new WeatherJSONParser();
             mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
+        }
+        if (mForecast != null) {
+            Log.d(getClass().getName(), "mForecast known");
+            refreshView();
+        } else {
+            Log.d(getClass().getName(), "mForecast unknown");
+            if (mCurrentLocation != null) {
+                Log.d(getClass().getName(), "Current loc known");
+                WeatherJSONParser.UpdateForecastDataByLocation(mCurrentLocation, this, ((WeatherActivity) getActivity()).unitFormat, ((WeatherActivity) getActivity()).numberOfForecasts);
+            }
         }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAdapter = new ForecastListAdapter(getActivity(), mForecast, (((WeatherActivity) getActivity()).unitFormat));
+        mListView = getListView();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mListView = null;
     }
 
     @Override
@@ -117,6 +126,15 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    private void refreshView () {
+        if (mListView != null) {
+            mAdapter = new ForecastListAdapter(getActivity(), mForecast, (((WeatherActivity) getActivity()).unitFormat));
+            setListAdapter(mAdapter);
+        } else {
+            Log.w(getClass().getName(), "ListView is null");
+        }
     }
 
     /**

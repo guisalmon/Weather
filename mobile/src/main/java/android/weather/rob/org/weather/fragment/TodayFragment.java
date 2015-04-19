@@ -36,7 +36,6 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
 
     private final Location mCurrentLocation = null;
     private Geolocation mGeolocation = null;
-    private WeatherJSONParser mWeatherUpdater = null;
     private View mRootView;
     private OnFragmentInteractionListener mListener;
     private String[] mUnits;
@@ -47,15 +46,19 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
 
     @Override
     public void onCurrentWeatherTaskCompleted(Weather weather) {
-        Locale country = new Locale("", weather.getCountry());
-        ((TextView) getActivity().findViewById(R.id.todayLocation)).setText(weather.getCity() + ", " + country.getDisplayCountry());
-        ((TextView) getActivity().findViewById(R.id.todayWeatherDescription)).setText(weather.getTemp() + mUnits[0] + " | " + weather.getCondition());
-        ((TextView) getActivity().findViewById(R.id.todayWeatherHumidity)).setText(weather.getHumidity() + "%");
-        ((TextView) getActivity().findViewById(R.id.todayWeatherPrecipitations)).setText(weather.getPrecipitations() + " " + mUnits[1]);
-        ((TextView) getActivity().findViewById(R.id.todayWeatherPressure)).setText(weather.getPressure() + " hPa");
-        ((TextView) getActivity().findViewById(R.id.todayWeatherWindSpeed)).setText(weather.getWindSpeed() + " " + mUnits[2]);
-        ((TextView) getActivity().findViewById(R.id.todayWeatherDirection)).setText(weather.getWindDirection());
-        ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(weather.getIconRes());
+
+        //Checks if the root view is still present when the task finishes and if weather actually got the needed data
+        if (mRootView != null && weather.getCountry() != null) {
+            Locale country = new Locale("", weather.getCountry());
+            ((TextView) getActivity().findViewById(R.id.todayLocation)).setText(weather.getCity() + ", " + country.getDisplayCountry());
+            ((TextView) getActivity().findViewById(R.id.todayWeatherDescription)).setText(weather.getTemp() + mUnits[0] + " | " + weather.getCondition());
+            ((TextView) getActivity().findViewById(R.id.todayWeatherHumidity)).setText(weather.getHumidity() + "%");
+            ((TextView) getActivity().findViewById(R.id.todayWeatherPrecipitations)).setText(weather.getPrecipitations() + " " + mUnits[1]);
+            ((TextView) getActivity().findViewById(R.id.todayWeatherPressure)).setText(weather.getPressure() + " hPa");
+            ((TextView) getActivity().findViewById(R.id.todayWeatherWindSpeed)).setText(weather.getWindSpeed() + " " + mUnits[2]);
+            ((TextView) getActivity().findViewById(R.id.todayWeatherDirection)).setText(weather.getWindDirection());
+            ((ImageView) getActivity().findViewById(R.id.todayWeatherIcon)).setImageResource(weather.getIconRes());
+        }
 
     }
 
@@ -72,7 +75,6 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
             mUnits = getResources().getStringArray(R.array.imperial);
         }
         if (mCurrentLocation == null) {
-            mWeatherUpdater = new WeatherJSONParser();
             mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
         }
         super.onResume();
@@ -93,6 +95,12 @@ public class TodayFragment extends Fragment implements GeolocationListener, OnWe
         // Inflate the layout for this fragment
         mRootView = inflater.inflate(R.layout.fragment_today, container, false);
         return mRootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mRootView = null;
     }
 
     @Override
