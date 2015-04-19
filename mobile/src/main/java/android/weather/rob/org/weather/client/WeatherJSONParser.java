@@ -225,6 +225,7 @@ public class WeatherJSONParser {
             if (data != null) {
                 try {
                     forecast = getForecastWeather(data);
+                    return forecast;
                 } catch (JSONException e) {
                     e.printStackTrace();
                     return null;
@@ -240,8 +241,8 @@ public class WeatherJSONParser {
                 }
             }
             */
+            return null;
 
-            return forecast;
         }
 
 
@@ -269,15 +270,17 @@ public class WeatherJSONParser {
                     weather = getCurrentWeather(data);
                     // Let's retrieve the icon
                     weather.setImage((new WeatherHttpClient()).getImage(weather.getIconPath()));
+                    weather.setDateToCurrentTime();
+                    return weather;
                 } catch (JSONException e) {
                     e.printStackTrace();
                     return null;
                 }
             }
 
-            weather.setDateToCurrentTime();
 
-            return weather;
+
+            return null;
         }
 
         @Override

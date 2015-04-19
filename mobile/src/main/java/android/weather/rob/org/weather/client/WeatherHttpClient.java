@@ -63,11 +63,13 @@ public class WeatherHttpClient {
                 is.close();
             } catch (Throwable t) {
                 Log.d(getClass().getName(), "Did not manage to close the incoming stream while downloading weather");
+                return null;
             }
             try {
                 con.disconnect();
             } catch (Throwable t) {
                 Log.d(getClass().getName(), "Did not manage to disconnect from the API while downloading weather");
+                return null;
             }
         }
 
