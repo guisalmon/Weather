@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Listener to register in the WeatherJSONParser and implement in the class which will use the
  * weather forecast data.
  */
-public interface OnForecastDownloadComplete {
+public interface OnForecastDownloadListener {
 
     /**
      * Called when a weather forecast download is finished

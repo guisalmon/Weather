@@ -1,9 +1,6 @@
 package android.weather.rob.org.weather.fragment;
 
 import android.app.Activity;
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
@@ -12,9 +9,9 @@ import android.weather.rob.org.weather.R;
 import android.weather.rob.org.weather.activity.WeatherActivity;
 import android.weather.rob.org.weather.adapter.ForecastListAdapter;
 import android.weather.rob.org.weather.client.WeatherJSONParser;
-import android.weather.rob.org.weather.geolocation.Geolocation;
-import android.weather.rob.org.weather.geolocation.GeolocationListener;
-import android.weather.rob.org.weather.listener.OnForecastDownloadComplete;
+import android.weather.rob.org.weather.listener.OnForecastDownloadListener;
+import android.weather.rob.org.weather.listener.OnPlaceChangeListener;
+import android.weather.rob.org.weather.provider.PlaceProvider;
 import android.weather.rob.org.weather.utility.Forecast;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -30,13 +27,11 @@ import java.util.ArrayList;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class ForecastFragment extends ListFragment implements OnForecastDownloadComplete, GeolocationListener {
+public class ForecastFragment extends ListFragment implements OnForecastDownloadListener, OnPlaceChangeListener {
 
-    private Location mCurrentLocation = null;
-    private Geolocation mGeolocation = null;
     private ArrayList<Forecast> mForecast;
     private ListView mListView;
-    private OnFragmentInteractionListener mListener;
+    private PlaceProvider mPlaceProvider;
     /**
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
@@ -52,18 +47,11 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
 
     @Override
     public void onForecastTaskFailed() {
-        Toast.makeText(getActivity(), R.string.error_forecast_download, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onGeolocationRespond(Geolocation geolocation, Location location) {
-        mCurrentLocation = location;
-        WeatherJSONParser.UpdateForecastDataByLocation(location, this, ((WeatherActivity) getActivity()).unitFormat, ((WeatherActivity) getActivity()).numberOfForecasts);
-    }
-
-    @Override
-    public void onGeolocationFail(Geolocation geolocation) {
-        Log.d(getClass().getName(), "Fragment.onGeolocationFail()");
+        if (mPlaceProvider.getPlaceType() == PlaceProvider.PlaceType.CITY_NAME) {
+            mPlaceProvider.setCityInvalid();
+        } else {
+            Toast.makeText(getActivity(), R.string.error_forecast_download, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -77,19 +65,11 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
     @Override
     public void onResume() {
         super.onResume();
-        if (mCurrentLocation == null) {
-            mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
-        }
         if (mForecast != null) {
-            Log.d(getClass().getName(), "mForecast known");
             refreshView();
-        } else {
-            Log.d(getClass().getName(), "mForecast unknown");
-            if (mCurrentLocation != null) {
-                Log.d(getClass().getName(), "Current loc known");
-                WeatherJSONParser.UpdateForecastDataByLocation(mCurrentLocation, this, ((WeatherActivity) getActivity()).unitFormat, ((WeatherActivity) getActivity()).numberOfForecasts);
-            }
         }
+        mPlaceProvider = (PlaceProvider) getActivity();
+        mPlaceProvider.registerOnPlaceChangeListener(this);
     }
 
     @Override
@@ -107,33 +87,45 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
     @Override
     public void onPause() {
         super.onPause();
-        // stop geolocation
-        if (mGeolocation != null) mGeolocation.stop();
+        mPlaceProvider.unregisterOnPlaceChangeListener();
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
-    private void refreshView () {
+    private void refreshView() {
         if (mListView != null) {
             mAdapter = new ForecastListAdapter(getActivity(), mForecast, (((WeatherActivity) getActivity()).unitFormat));
             setListAdapter(mAdapter);
         } else {
             Log.w(getClass().getName(), "ListView is null");
+        }
+    }
+
+    @Override
+    public void updateData(PlaceProvider.PlaceType type, PlaceProvider provider) {
+        switch (type) {
+            case GEOLOCATION:
+                WeatherJSONParser.UpdateForecastDataByLocation(
+                        provider.getLocation(),
+                        this,
+                        ((WeatherActivity) getActivity()).unitFormat,
+                        ((WeatherActivity) getActivity()).numberOfForecasts);
+                break;
+            case CITY_NAME:
+                WeatherJSONParser.UpdateForecastDataByCityName(
+                        provider.getCity(),
+                        this,
+                        ((WeatherActivity) getActivity()).unitFormat,
+                        ((WeatherActivity) getActivity()).numberOfForecasts);
+                break;
         }
     }
 

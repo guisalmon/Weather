@@ -2,8 +2,8 @@ package android.weather.rob.org.weather.client;
 
 import android.location.Location;
 import android.os.AsyncTask;
-import android.weather.rob.org.weather.listener.OnForecastDownloadComplete;
-import android.weather.rob.org.weather.listener.OnWeatherDownloadComplete;
+import android.weather.rob.org.weather.listener.OnForecastDownloadListener;
+import android.weather.rob.org.weather.listener.OnWeatherDownloadListener;
 import android.weather.rob.org.weather.utility.Forecast;
 import android.weather.rob.org.weather.utility.Weather;
 
@@ -21,13 +21,14 @@ public class WeatherJSONParser {
     private static String mSuffix;
 
     /**
-     * Returns a weather forecast for a given location fir the next 5 days through the listener given in parameter
+     * Returns a weather forecast for a given location for specified amount of days through the listener given in parameter
      *
+     * @param numberOfDays amount of days it should retrieve data for, can't be more than 15
      * @param location containing coordinates
      * @param listener to call when the data retrieval is done
      * @param format   can be Weather.format.METRIC or Weather.format.IMPERIAL
      */
-    public static void UpdateForecastDataByLocation(Location location, OnForecastDownloadComplete listener, Weather.format format, int numberOfDays) {
+    public static void UpdateForecastDataByLocation(Location location, OnForecastDownloadListener listener, Weather.format format, int numberOfDays) {
         //Formatting the request suffix
         if (format == Weather.format.IMPERIAL) {
             mSuffix = "lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&units=imperial&cnt=" + numberOfDays;
@@ -46,13 +47,54 @@ public class WeatherJSONParser {
      * @param listener to call when the data retrieval is done
      * @param format   can be Weather.format.METRIC or Weather.format.IMPERIAL
      */
-    public static void UpdateCurrentDataByLocation(Location location, OnWeatherDownloadComplete listener, Weather.format format) {
+    public static void UpdateCurrentDataByLocation(Location location, OnWeatherDownloadListener listener, Weather.format format) {
 
         //Formatting the request suffix
         if (format == Weather.format.IMPERIAL) {
             mSuffix = "lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&units=imperial";
         } else {
             mSuffix = "lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&units=metric";
+        }
+
+        //Launching the download task
+        new DownloadWeatherTask().execute(listener);
+    }
+
+    /**
+     * Returns a weather forecast for a given city for specified amount of days through the listener given in parameter
+     *
+     * @param numberOfDays amount of days it should retrieve data for, can't be more than 15
+     * @param cityName name of the city we want a forecast for
+     * @param listener to call when the data retrieval is done
+     * @param format   can be Weather.format.METRIC or Weather.format.IMPERIAL
+     */
+    public static void UpdateForecastDataByCityName(String cityName, OnForecastDownloadListener listener, Weather.format format, int numberOfDays) {
+        //Formatting the request suffix
+        if (format == Weather.format.IMPERIAL) {
+            mSuffix = "q=" + cityName + "&units=imperial&cnt=" + numberOfDays;
+        } else {
+            mSuffix = "q=" + cityName + "&units=metric&cnt=" + numberOfDays;
+        }
+
+        //Launching the download task
+        new DownloadForecastTask().execute(listener);
+    }
+
+    /**
+     * Returns the current weather for a given city through the listener given in parameter
+     *
+     * @param cityName name of the city
+     * @param listener to call when the data retrieval is done
+     * @param format   can be Weather.format.METRIC or Weather.format.IMPERIAL
+     */
+
+    public static void UpdateCurrentDataByCityName(String cityName, OnWeatherDownloadListener listener, Weather.format format) {
+
+        //Formatting the request suffix
+        if (format == Weather.format.IMPERIAL) {
+            mSuffix = "q=" + cityName + "&units=imperial";
+        } else {
+            mSuffix = "q=" + cityName + "&units=metric";
         }
 
         //Launching the download task
@@ -171,11 +213,11 @@ public class WeatherJSONParser {
         return jObj.getInt(tagName);
     }
 
-    private static class DownloadForecastTask extends AsyncTask<OnForecastDownloadComplete, Void, ArrayList<Forecast>> {
-        private OnForecastDownloadComplete listener;
+    private static class DownloadForecastTask extends AsyncTask<OnForecastDownloadListener, Void, ArrayList<Forecast>> {
+        private OnForecastDownloadListener listener;
 
         @Override
-        protected ArrayList<Forecast> doInBackground(OnForecastDownloadComplete... params) {
+        protected ArrayList<Forecast> doInBackground(OnForecastDownloadListener... params) {
             ArrayList<Forecast> forecast = new ArrayList<>();
             listener = params[0];
             String data = ((new WeatherHttpClient()).getWeatherData(mSuffix, WeatherHttpClient.WeatherRequest.FORECAST));
@@ -213,11 +255,11 @@ public class WeatherJSONParser {
         }
     }
 
-    private static class DownloadWeatherTask extends AsyncTask<OnWeatherDownloadComplete, Void, Weather> {
-        private OnWeatherDownloadComplete listener;
+    private static class DownloadWeatherTask extends AsyncTask<OnWeatherDownloadListener, Void, Weather> {
+        private OnWeatherDownloadListener listener;
 
         @Override
-        protected Weather doInBackground(OnWeatherDownloadComplete... params) {
+        protected Weather doInBackground(OnWeatherDownloadListener... params) {
             Weather weather = new Weather();
             listener = params[0];
             String data = ((new WeatherHttpClient()).getWeatherData(mSuffix, WeatherHttpClient.WeatherRequest.CURRENT));

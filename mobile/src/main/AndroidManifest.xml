@@ -31,7 +31,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="android.weather.rob.org.weather.activity.WeatherActivity" />
+                android:value=".activity.WeatherActivity" />
         </activity>
     </application>
 

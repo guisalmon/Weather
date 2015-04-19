@@ -46,6 +46,8 @@
 
     <string name="error_forecast_download">Downloading of the forecast data failed, check your internet connection</string>
     <string name="error_weather_download">Downloading of the current weather data failed, check your internet connection</string>
+    <string name="error_in_city_name">There is no data available for this city</string>
+    <string name="error_location">Locating you failed, check if geolocation is enabled on your device</string>
 
     <string name="forecast_list_icon_desc">Weather icon from the forecast</string>
     <string name="today_icon_desc">Weather icon for today\'s weather</string>
