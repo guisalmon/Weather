@@ -218,7 +218,7 @@ public class WeatherJSONParser {
 
         @Override
         protected ArrayList<Forecast> doInBackground(OnForecastDownloadListener... params) {
-            ArrayList<Forecast> forecast = new ArrayList<>();
+            ArrayList<Forecast> forecast;
             listener = params[0];
             String data = ((new WeatherHttpClient()).getWeatherData(mSuffix, WeatherHttpClient.WeatherRequest.FORECAST));
 
@@ -267,7 +267,7 @@ public class WeatherJSONParser {
 
             if (data != null) {
                 try {
-                    Weather weather = new Weather();
+                    Weather weather;
                     weather = getCurrentWeather(data);
                     // Let's retrieve the icon
                     weather.setImage((new WeatherHttpClient()).getImage(weather.getIconPath()));

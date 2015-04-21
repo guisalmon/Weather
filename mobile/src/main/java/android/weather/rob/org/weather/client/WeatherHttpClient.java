@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -61,13 +62,13 @@ public class WeatherHttpClient {
         } finally {
             try {
                 is.close();
-            } catch (Throwable t) {
+            } catch (Exception e) {
                 Log.d(getClass().getName(), "Did not manage to close the incoming stream while downloading weather");
                 return null;
             }
             try {
                 con.disconnect();
-            } catch (Throwable t) {
+            } catch (Exception e) {
                 Log.d(getClass().getName(), "Did not manage to disconnect from the API while downloading weather");
                 return null;
             }
@@ -103,12 +104,12 @@ public class WeatherHttpClient {
         } finally {
             try {
                 is.close();
-            } catch (Throwable t) {
+            } catch (Exception e) {
                 Log.d(getClass().getName(), "Did not manage to close the incoming stream while downloading the icon");
             }
             try {
                 con.disconnect();
-            } catch (Throwable t) {
+            } catch (Exception e) {
                 Log.d(getClass().getName(), "Did not manage to disconnect from the API while downloading the icon");
             }
         }

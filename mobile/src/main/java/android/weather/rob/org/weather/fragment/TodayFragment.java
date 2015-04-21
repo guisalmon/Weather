@@ -121,11 +121,6 @@ public class TodayFragment extends Fragment implements OnWeatherDownloadListener
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
     public void updateData(PlaceProvider.PlaceType type, PlaceProvider provider) {
         switch (type) {
             case GEOLOCATION:

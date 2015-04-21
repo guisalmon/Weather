@@ -1,6 +1,5 @@
 package android.weather.rob.org.weather.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
@@ -14,7 +13,6 @@ import android.weather.rob.org.weather.listener.OnPlaceChangeListener;
 import android.weather.rob.org.weather.provider.PlaceProvider;
 import android.weather.rob.org.weather.utility.Forecast;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,20 +21,12 @@ import java.util.ArrayList;
  * <p/>
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
- * interface.
  */
 public class ForecastFragment extends ListFragment implements OnForecastDownloadListener, OnPlaceChangeListener {
 
     private ArrayList<Forecast> mForecast;
     private ListView mListView;
     private PlaceProvider mPlaceProvider;
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private ForecastListAdapter mAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -88,20 +78,14 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
         mPlaceProvider.unregisterOnPlaceChangeListener();
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
     private void refreshView() {
         if (mListView != null) {
-            mAdapter = new ForecastListAdapter(getActivity(), mForecast, (((WeatherActivity) getActivity()).unitFormat));
-            setListAdapter(mAdapter);
+            /*
+      The Adapter which will be used to populate the ListView/GridView with
+      Views.
+     */
+            ForecastListAdapter adapter = new ForecastListAdapter(getActivity(), mForecast, (((WeatherActivity) getActivity()).unitFormat));
+            setListAdapter(adapter);
         } else {
             Log.w(getClass().getName(), "ListView is null");
         }
@@ -128,20 +112,4 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
                 break;
         }
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
-    }
-
 }

@@ -110,8 +110,9 @@ public class Geolocation implements LocationListener {
     public void onProviderDisabled(String provider) {
         Log.v(getClass().getName(), "Geolocation.onProviderDisabled(): " + provider);
         providerCount -= 1;
+        Log.d(getClass().getName(), "provider count : "+providerCount);
         if (providerCount == 0) {
-            ((GeolocationListener) mListener.get()).onGeolocationFail(this);
+            mListener.get().onGeolocationFail(this);
         }
 
     }
@@ -121,6 +122,7 @@ public class Geolocation implements LocationListener {
     public void onProviderEnabled(String provider) {
         Log.v(getClass().getName(), "Geolocation.onProviderEnabled(): " + provider);
         providerCount += 1;
+        Log.d(getClass().getName(), "provider count : "+providerCount);
     }
 
 

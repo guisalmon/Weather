@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -44,7 +42,6 @@ public class WeatherActivity extends ActionBarActivity
     private PlaceType mPlaceType = PlaceType.GEOLOCATION;
     private Location mCurrentLocation = null;
     private OnPlaceChangeListener mPlaceListener = null;
-    private SearchView mSearchCity;
     private MenuItem mMenuItemSearch;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -140,10 +137,10 @@ public class WeatherActivity extends ActionBarActivity
             getMenuInflater().inflate(R.menu.weather, menu);
             restoreActionBar();
             mMenuItemSearch = menu.findItem(R.id.citySearchItem);
-            mSearchCity = (SearchView) MenuItemCompat.getActionView(mMenuItemSearch);
-            mSearchCity.setQueryHint(getResources().getString(R.string.city_search_hint));
-            mSearchCity.setOnQueryTextListener(this);
-            mSearchCity.setIconifiedByDefault(true);
+            SearchView searchCity = (SearchView) MenuItemCompat.getActionView(mMenuItemSearch);
+            searchCity.setQueryHint(getResources().getString(R.string.city_search_hint));
+            searchCity.setOnQueryTextListener(this);
+            searchCity.setIconifiedByDefault(true);
             return true;
         }
 
@@ -217,7 +214,7 @@ public class WeatherActivity extends ActionBarActivity
     @Override
     public void registerOnPlaceChangeListener(OnPlaceChangeListener listener) {
         mPlaceListener = listener;
-        if(mCurrentLocation != null || mPlaceType == PlaceType.CITY_NAME) {
+        if (mCurrentLocation != null || mPlaceType == PlaceType.CITY_NAME) {
             listener.updateData(mPlaceType, this);
         }
     }
