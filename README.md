@@ -8,13 +8,16 @@ Features
 ========
 
 ###### Today's weather:
-![alt tag](https://db.tt/gMG2kpaV)
+![alt tag](https://db.tt/tyNmjPIO)
 
 ###### Forecast weather:
-![alt tag](https://db.tt/QrKI4cjO)
+![alt tag](https://db.tt/f31Dcjwt)
 
-###### Supports metric and the imperial unit systems:
-![alt tag](https://db.tt/UCVqMa6J)
+###### Supports metric and the imperial unit systems and searching forecast for up to 15 days:
+![alt tag](https://db.tt/Bv8n33Z2)
+
+###### Allows searching weather conditions in remote cities
+![alt tag](https://db.tt/x0tdOPgl)
 
 
 Installation
@@ -34,9 +37,22 @@ Changelog
 =========
 
 ##1.0.0 Features:
-###### Current weather for the current location
-###### Weather forecast for up to 15 days for the current location
-###### Support of both the metric system and the imperial system
+* Current weather for the current location
+* Weather forecast for up to 15 days for the current location
+* Support of both the metric system and the imperial system
+
+##2.0.0 Features:
+* Current weather and forecast for remote cities
+
+Test
+====
+##Tested on:
+* Nexus 5 on 5.1
+* Galaxy SII on 4.4.4
+* Galaxy Nexus on 4.0.4 (emulator)
+
+If you encounter any issues on your own device, feel free to post an issue on this repository. Don't forget to specify how to reproduce the issue.
+
 
 
 <a name="buildproject" />Building project
