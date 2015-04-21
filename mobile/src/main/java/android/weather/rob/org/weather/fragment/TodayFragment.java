@@ -15,7 +15,6 @@ import android.weather.rob.org.weather.provider.PlaceProvider;
 import android.weather.rob.org.weather.utility.Weather;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -39,17 +38,18 @@ public class TodayFragment extends Fragment implements OnWeatherDownloadListener
     public void onCurrentWeatherTaskCompleted(Weather weather) {
 
         mWeather = weather;
-        if (mPlaceProvider.getPlaceType() == PlaceProvider.PlaceType.CITY_NAME){
+        if (mPlaceProvider.getPlaceType() == PlaceProvider.PlaceType.CITY_NAME) {
             mPlaceProvider.setCityValid();
         }
         //Checks if the root view is still present when the task finishes and if weather actually got the needed data
-        if (mRootView != null && weather.getCountry() != null) {
-            refreshView();
+        if (mRootView != null) {
+            if (weather.getCountry() != null) refreshView();
+            else mPlaceProvider.showToast(R.string.error_weather_download);
         }
 
     }
 
-    private void refreshView () {
+    private void refreshView() {
         if (mWeather.getCountry() != null) {
             Locale country = new Locale("", mWeather.getCountry());
             ((TextView) getActivity().findViewById(R.id.todayLocation)).setText(mWeather.getCity() + ", " + country.getDisplayCountry());
@@ -68,8 +68,7 @@ public class TodayFragment extends Fragment implements OnWeatherDownloadListener
         if (mPlaceProvider.getPlaceType() == PlaceProvider.PlaceType.CITY_NAME) {
             mPlaceProvider.setCityInvalid();
         } else {
-            Toast.makeText(getActivity(), R.string.error_weather_download, Toast.LENGTH_SHORT).show();
-            updateData(mPlaceProvider.getPlaceType(), mPlaceProvider);
+            mPlaceProvider.showToast(R.string.error_forecast_download);
         }
     }
 
@@ -145,5 +144,6 @@ public class TodayFragment extends Fragment implements OnWeatherDownloadListener
                 break;
         }
     }
+
 
 }

@@ -15,8 +15,7 @@ public interface PlaceProvider {
     void setCityValid ();
     void registerOnPlaceChangeListener (OnPlaceChangeListener listener);
     void unregisterOnPlaceChangeListener ();
-    void setGeolocInvalid ();
-    void setGeolocValid ();
+    void showToast(int resource);
 
     enum PlaceType {
         GEOLOCATION,

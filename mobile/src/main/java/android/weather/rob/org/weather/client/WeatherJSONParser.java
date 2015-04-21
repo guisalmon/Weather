@@ -24,9 +24,9 @@ public class WeatherJSONParser {
      * Returns a weather forecast for a given location for specified amount of days through the listener given in parameter
      *
      * @param numberOfDays amount of days it should retrieve data for, can't be more than 15
-     * @param location containing coordinates
-     * @param listener to call when the data retrieval is done
-     * @param format   can be Weather.format.METRIC or Weather.format.IMPERIAL
+     * @param location     containing coordinates
+     * @param listener     to call when the data retrieval is done
+     * @param format       can be Weather.format.METRIC or Weather.format.IMPERIAL
      */
     public static void UpdateForecastDataByLocation(Location location, OnForecastDownloadListener listener, Weather.format format, int numberOfDays) {
         //Formatting the request suffix
@@ -64,9 +64,9 @@ public class WeatherJSONParser {
      * Returns a weather forecast for a given city for specified amount of days through the listener given in parameter
      *
      * @param numberOfDays amount of days it should retrieve data for, can't be more than 15
-     * @param cityName name of the city we want a forecast for
-     * @param listener to call when the data retrieval is done
-     * @param format   can be Weather.format.METRIC or Weather.format.IMPERIAL
+     * @param cityName     name of the city we want a forecast for
+     * @param listener     to call when the data retrieval is done
+     * @param format       can be Weather.format.METRIC or Weather.format.IMPERIAL
      */
     public static void UpdateForecastDataByCityName(String cityName, OnForecastDownloadListener listener, Weather.format format, int numberOfDays) {
         //Formatting the request suffix
@@ -261,12 +261,13 @@ public class WeatherJSONParser {
 
         @Override
         protected Weather doInBackground(OnWeatherDownloadListener... params) {
-            Weather weather = new Weather();
+
             listener = params[0];
             String data = ((new WeatherHttpClient()).getWeatherData(mSuffix, WeatherHttpClient.WeatherRequest.CURRENT));
 
             if (data != null) {
                 try {
+                    Weather weather = new Weather();
                     weather = getCurrentWeather(data);
                     // Let's retrieve the icon
                     weather.setImage((new WeatherHttpClient()).getImage(weather.getIconPath()));
@@ -277,7 +278,6 @@ public class WeatherJSONParser {
                     return null;
                 }
             }
-
 
 
             return null;

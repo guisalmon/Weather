@@ -50,17 +50,14 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
         if (mPlaceProvider.getPlaceType() == PlaceProvider.PlaceType.CITY_NAME) {
             mPlaceProvider.setCityInvalid();
         } else {
-            Toast.makeText(getActivity(), R.string.error_forecast_download, Toast.LENGTH_SHORT).show();
-            updateData(mPlaceProvider.getPlaceType(), mPlaceProvider);
+            mPlaceProvider.showToast(R.string.error_forecast_download);
         }
     }
 
     @Override
     public void onForecastTaskCompleted(ArrayList<Forecast> forecasts) {
-        if (forecasts != null) {
-            mForecast = forecasts;
-            refreshView();
-        }
+        mForecast = forecasts;
+        refreshView();
     }
 
     @Override

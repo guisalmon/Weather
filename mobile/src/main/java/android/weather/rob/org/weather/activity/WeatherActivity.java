@@ -205,7 +205,7 @@ public class WeatherActivity extends ActionBarActivity
             mPlaceType = PlaceType.GEOLOCATION;
         }
         mPlaceListener.updateData(mPlaceType, this);
-        Toast.makeText(this, R.string.error_in_city_name, Toast.LENGTH_SHORT).show();
+        showToast(R.string.error_in_city_name);
     }
 
     @Override
@@ -228,20 +228,6 @@ public class WeatherActivity extends ActionBarActivity
     }
 
     @Override
-    public void setGeolocInvalid() {
-        mPlaceType = mPreviousPlaceType;
-        if (mPlaceType == PlaceType.CITY_NAME) {
-            mCityName = mPreviousCityName;
-        }
-        mPlaceListener.updateData(mPlaceType, this);
-    }
-
-    @Override
-    public void setGeolocValid() {
-        mPreviousPlaceType = PlaceType.GEOLOCATION;
-    }
-
-    @Override
     public void onGeolocationRespond(Geolocation geolocation, Location location) {
         mCurrentLocation = location;
         if (mPlaceListener != null) {
@@ -251,6 +237,19 @@ public class WeatherActivity extends ActionBarActivity
 
     @Override
     public void onGeolocationFail(Geolocation geolocation) {
-        setGeolocInvalid();
+        mPlaceType = mPreviousPlaceType;
+        if (mPlaceType == PlaceType.CITY_NAME) {
+            mCityName = mPreviousCityName;
+        }
+        mPlaceListener.updateData(mPlaceType, this);
+    }
+
+    @Override
+    public void showToast(final int toast) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(WeatherActivity.this, toast, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
