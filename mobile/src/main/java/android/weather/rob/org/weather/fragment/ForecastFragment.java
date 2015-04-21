@@ -48,6 +48,12 @@ public class ForecastFragment extends ListFragment implements OnForecastDownload
     public void onForecastTaskCompleted(ArrayList<Forecast> forecasts) {
         mForecast = forecasts;
         refreshView();
+        if (mPlaceProvider.getPlaceType() == PlaceProvider.PlaceType.GEOLOCATION) {
+            mPlaceProvider.showToast(R.string.forecast_acquired_location);
+        } else {
+            mPlaceProvider.showToast(getResources().getString(R.string.forecast_acquired_city) + " " + mPlaceProvider.getCity());
+        }
+
     }
 
     @Override

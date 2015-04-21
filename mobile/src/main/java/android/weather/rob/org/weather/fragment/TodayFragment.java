@@ -43,8 +43,14 @@ public class TodayFragment extends Fragment implements OnWeatherDownloadListener
         }
         //Checks if the root view is still present when the task finishes and if weather actually got the needed data
         if (mRootView != null) {
-            if (weather.getCountry() != null) refreshView();
-            else mPlaceProvider.showToast(R.string.error_weather_download);
+            if (weather.getCountry() != null) {
+                refreshView();
+                if (mPlaceProvider.getPlaceType() == PlaceProvider.PlaceType.GEOLOCATION) {
+                    mPlaceProvider.showToast(R.string.weather_acquired_location);
+                } else {
+                    mPlaceProvider.showToast(getResources().getString(R.string.weather_acquired_city) + " " + mPlaceProvider.getCity());
+                }
+            } else mPlaceProvider.showToast(R.string.error_weather_download);
         }
 
     }

@@ -14,6 +14,10 @@
     <string name="city_search_hint">Search city</string>
     <string name="city_search_title">City</string>
     <string name="location_search_title">Find location</string>
+    <string name="forecast_acquired_location">Forecast acquired for your current location</string>
+    <string name="forecast_acquired_city">Forecast acquired for</string>
+    <string name="weather_acquired_location">Weather acquired for your current location</string>
+    <string name="weather_acquired_city">Weather acquired for</string>
 
 
     <string name="today_location_placeholder"> , </string>

@@ -249,4 +249,13 @@ public class WeatherActivity extends ActionBarActivity
             }
         });
     }
+
+    @Override
+    public void showToast(final String text) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(WeatherActivity.this, text, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

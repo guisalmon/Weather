@@ -23,6 +23,8 @@ public interface PlaceProvider {
 
     void showToast(int resource);
 
+    void showToast(String text);
+
     enum PlaceType {
         GEOLOCATION,
         CITY_NAME
